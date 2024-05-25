@@ -54,6 +54,25 @@
                         <Font name="Haettenschweiler" size="40.0" />
                      </font>
                   </Text>
+                  <AnchorPane fx:id="gameEndPane" layoutX="302.0" layoutY="225.0" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: WHITE;" visible="false">
+                     <children>
+                        <Text fx:id="gameResultMsg" layoutX="50.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YOU WIN" textAlignment="CENTER" wrappingWidth="300.13671875">
+                           <font>
+                              <Font name="Haettenschweiler" size="96.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="backToMenuBtn" layoutX="50.0" layoutY="122.0" mnemonicParsing="false" onAction="#backToMenuBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: BLACK;" text="Menu" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Haettenschweiler" size="27.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="playAgainBtn" layoutX="219.0" layoutY="122.0" mnemonicParsing="false" onAction="#playAgainButtonHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: BLACK;" text="Play Again" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Haettenschweiler" size="27.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="appLaunchView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">

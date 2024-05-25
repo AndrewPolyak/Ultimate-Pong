@@ -22,6 +22,9 @@ public class AppController implements Initializable {
     private AnchorPane appLaunchView;
 
     @FXML
+    private Button backToMenuBtn;
+
+    @FXML
     private Circle ball;
 
     @FXML
@@ -49,7 +52,13 @@ public class AppController implements Initializable {
     private AnchorPane gameConfigPane;
 
     @FXML
+    private AnchorPane gameEndPane;
+
+    @FXML
     private Text gameMsg;
+
+    @FXML
+    private Text gameResultMsg;
 
     @FXML
     private AnchorPane gameView;
@@ -94,6 +103,9 @@ public class AppController implements Initializable {
     private Text oppScore;
 
     @FXML
+    private Button playAgainBtn;
+
+    @FXML
     private Button playGameBtn;
 
     @FXML
@@ -115,18 +127,18 @@ public class AppController implements Initializable {
     private Text welcomeMsg;
 
     
-    public AppController() {
-
-    }
-    
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	GameController play = new GameController(ball, plyScore, oppScore);
+    	GameController play = new GameController(ball, plyScore, oppScore, gameEndPane, gameResultMsg);
     	play.startAnimation();
     }
     
     
+    @FXML
+    void backToMenuBtnHandler(ActionEvent event) {
+
+    }
+
     @FXML
     void easyModeBtnHandler(ActionEvent event) {
 
@@ -143,6 +155,11 @@ public class AppController implements Initializable {
     }
 
     @FXML
+    void playAgainButtonHandler(ActionEvent event) {
+
+    }
+
+    @FXML
     void playGameBtnHandler(ActionEvent event) {
 
     }
@@ -151,6 +168,5 @@ public class AppController implements Initializable {
     void plyForfeitHandler(ActionEvent event) {
 
     }
-
 
 }

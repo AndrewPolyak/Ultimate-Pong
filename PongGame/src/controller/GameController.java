@@ -22,6 +22,8 @@ public class GameController {
 	private AnimationTimer animate;
 	private SecureRandom random;
 	private Circle ball;
+	AnchorPane gameEndPane;
+	Text gameResultMsg;
 	
 	private double VELOCITY_INCREASE = 0.5;
 	
@@ -43,11 +45,13 @@ public class GameController {
 	private int directionVertical;
 	
 	
-	public GameController(Circle ball, Text plyScore, Text oppScore) {
+	public GameController(Circle ball, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
 		this.random = new SecureRandom();
 		this.ball = ball;
 		this.plyScore = plyScore;
 		this.oppScore = oppScore;
+		this.gameEndPane = gameEndPane;
+		this.gameResultMsg = gameResultMsg;
 		this.directionRight = random.nextBoolean();
 		this.directionVertical = random.nextInt(3);
 	}
@@ -152,16 +156,25 @@ public class GameController {
 	private void endGame() {
 		if (Integer.parseInt(plyScore.getText()) == 10) {
 			resetBall();
-			this.xVelocity = 0;
-			this.yVelocity = 0;
+			displayResults(true);
 			
 		} else if (Integer.parseInt(oppScore.getText()) == 10) {
 			resetBall();
-			this.xVelocity = 0;
-			this.yVelocity = 0;
-			
+			displayResults(false);
 		}
+	}
+	
+	
+	private void displayResults(boolean won) {
+		this.xVelocity = 0;
+		this.yVelocity = 0;
+		this.gameEndPane.setVisible(true);
 		
+		if (won) {
+			gameResultMsg.setText("YOU WIN"); // FIXME MVC
+		} else {
+			gameResultMsg.setText("YOU LOSE"); // FIXME MVC
+		}
 	}
 
 }
