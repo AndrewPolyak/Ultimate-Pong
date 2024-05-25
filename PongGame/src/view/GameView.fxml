@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane fx:id="gameView" prefHeight="651.0" prefWidth="1000.0" style="-fx-background-color: #343231;">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="500.0" layoutY="77.0" stroke="#ffffff00" strokeType="INSIDE" width="4.0" />
+                  <Text fx:id="plyScore" fill="#b9ff94" layoutX="610.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="150.13671875">
+                     <font>
+                        <Font name="Haettenschweiler" size="75.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="oppScore" fill="#ff9292" layoutX="239.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="150.13671875">
+                     <font>
+                        <Font name="Haettenschweiler" size="75.0" />
+                     </font>
+                  </Text>
+                  <Circle fx:id="ball" fill="#cfff04" layoutX="502.0" layoutY="325.0" radius="10.0" stroke="WHITE" strokeType="INSIDE" />
+                  <Rectangle fx:id="plyPaddle" arcHeight="5.0" arcWidth="5.0" fill="#b9ff94" height="70.0" layoutX="830.0" layoutY="291.0" stroke="WHITE" strokeType="INSIDE" width="15.0" />
+                  <Rectangle fx:id="oppPaddle" arcHeight="5.0" arcWidth="5.0" fill="#ff9292" height="70.0" layoutX="170.0" layoutY="290.0" stroke="WHITE" strokeType="INSIDE" width="15.0" />
+                  <Text fx:id="plyName" fill="#b9ff94" layoutX="685.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You" textAlignment="RIGHT" wrappingWidth="300.13671875">
+                     <font>
+                        <Font name="Haettenschweiler" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#ff9292" layoutX="14.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opponent" wrappingWidth="300.13671875">
+                     <font>
+                        <Font name="Haettenschweiler" size="40.0" />
+                     </font>
+                  </Text>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="4.0" layoutY="75.0" stroke="#ffffff00" strokeType="INSIDE" width="1000.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="4.0" layoutY="575.0" stroke="#ffffff00" strokeType="INSIDE" width="1000.0" />
+                  <Button fx:id="plyForfeit" layoutX="439.0" layoutY="590.0" mnemonicParsing="false" onAction="#plyForfeitHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Forfeit" textAlignment="CENTER">
+                     <font>
+                        <Font name="Haettenschweiler" size="27.0" />
+                     </font>
+                  </Button>
+                  <Text fx:id="gameMsg" fill="WHITE" layoutX="352.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PONG" textAlignment="CENTER" wrappingWidth="300.13671875">
+                     <font>
+                        <Font name="Haettenschweiler" size="40.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="appLaunchView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
+                  <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
+                     <font>
+                        <Font name="Cascadia Code Regular" size="50.0" />
+                     </font>
+                  </Text>
+                  <Circle layoutX="255.0" layoutY="315.0" radius="100.0" strokeType="INSIDE">
+                     <stroke>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.7298578199052133" startY="0.028436018957345988">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </stroke>
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.6303317535545023" startY="0.06635071090047394">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Circle>
+                  <Circle fill="#cfff04" layoutX="255.0" layoutY="354.0" radius="62.0" stroke="#cfff04" strokeType="INSIDE" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="136.0" layoutX="237.0" layoutY="412.0" stroke="#cfff04" strokeType="INSIDE" width="37.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="5.0" layoutX="67.0" layoutY="113.0" stroke="#cfff04" strokeType="INSIDE" width="115.0" />
+                  <AnchorPane fx:id="appLaunchPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
+                     <children>
+                        <Button fx:id="logInMenuBtn" layoutX="125.0" layoutY="265.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Log In">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="createAcctMenuBtn" layoutX="130.0" layoutY="341.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Create Account">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="20.0" />
+                           </font>
+                        </Button>
+                        <Text fill="#343231" layoutX="111.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select an option to continue" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="createAcctView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
+                  <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
+                     <font>
+                        <Font name="Cascadia Code Regular" size="50.0" />
+                     </font>
+                  </Text>
+                  <Circle layoutX="255.0" layoutY="315.0" radius="100.0" strokeType="INSIDE">
+                     <stroke>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.7298578199052133" startY="0.028436018957345988">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </stroke>
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.6303317535545023" startY="0.06635071090047394">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Circle>
+                  <Circle fill="#cfff04" layoutX="255.0" layoutY="354.0" radius="62.0" stroke="#cfff04" strokeType="INSIDE" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="136.0" layoutX="237.0" layoutY="412.0" stroke="#cfff04" strokeType="INSIDE" width="37.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="5.0" layoutX="67.0" layoutY="113.0" stroke="#cfff04" strokeType="INSIDE" width="115.0" />
+                  <AnchorPane fx:id="creatAcctPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
+                     <children>
+                        <Button fx:id="createAcctBtn" layoutX="125.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Create Account">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="20.0" />
+                           </font>
+                        </Button>
+                        <Text fill="#343231" layoutX="116.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create username &amp; password" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="newPassword" layoutX="125.0" layoutY="359.0" prefHeight="40.0" prefWidth="240.0">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="newUsername" layoutX="125.0" layoutY="278.0" prefHeight="40.0" prefWidth="240.0">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </TextField>
+                        <Text fill="#343231" layoutX="125.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#343231" layoutX="125.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="logInValidationMsg1" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="logInView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
+                  <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
+                     <font>
+                        <Font name="Cascadia Code Regular" size="50.0" />
+                     </font>
+                  </Text>
+                  <Circle layoutX="255.0" layoutY="315.0" radius="100.0" strokeType="INSIDE">
+                     <stroke>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.7298578199052133" startY="0.028436018957345988">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </stroke>
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.6303317535545023" startY="0.06635071090047394">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Circle>
+                  <Circle fill="#cfff04" layoutX="255.0" layoutY="354.0" radius="62.0" stroke="#cfff04" strokeType="INSIDE" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="136.0" layoutX="237.0" layoutY="412.0" stroke="#cfff04" strokeType="INSIDE" width="37.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="5.0" layoutX="67.0" layoutY="113.0" stroke="#cfff04" strokeType="INSIDE" width="115.0" />
+                  <AnchorPane fx:id="logInPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0" visible="false">
+                     <children>
+                        <Button fx:id="logInBtn" layoutX="125.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Login">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="20.0" />
+                           </font>
+                        </Button>
+                        <Text fill="#343231" layoutX="116.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter username &amp; password" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="existingPassword" layoutX="125.0" layoutY="359.0" prefHeight="40.0" prefWidth="240.0">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="existingUsername" layoutX="125.0" layoutY="278.0" prefHeight="40.0" prefWidth="240.0">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </TextField>
+                        <Text fill="#343231" layoutX="125.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#343231" layoutX="125.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="logInValidationMsg" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="preGameView" prefHeight="651.0" prefWidth="1000.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="657.0" layoutY="-6.0" stroke="#343231" strokeType="INSIDE" width="1000.0" />
+                  <Text fx:id="welcomeMsg" fill="#b9ff94" layoutX="200.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME BACK PLACEHOLDER" textAlignment="CENTER" wrappingWidth="600.13671875">
+                     <font>
+                        <Font name="Haettenschweiler" size="40.0" />
+                     </font>
+                  </Text>
+                  <AnchorPane fx:id="gameConfigPane" layoutX="250.0" layoutY="278.0" prefHeight="300.0" prefWidth="500.0">
+                     <children>
+                        <Button fx:id="playGameBtn" layoutX="185.0" layoutY="196.0" mnemonicParsing="false" onAction="#playGameBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Start" textAlignment="CENTER">
+                           <font>
+                              <Font name="Haettenschweiler" size="27.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="midModeBtn" layoutX="185.0" layoutY="103.0" mnemonicParsing="false" onAction="#midModeBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Medium" textAlignment="CENTER">
+                           <font>
+                              <Font name="Haettenschweiler" size="27.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="hardModeBtn" layoutX="356.0" layoutY="103.0" mnemonicParsing="false" onAction="#hardModeBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Hard" textAlignment="CENTER">
+                           <font>
+                              <Font name="Haettenschweiler" size="27.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="easyModeBtn" layoutX="17.0" layoutY="105.0" mnemonicParsing="false" onAction="#easyModeBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Easy" textAlignment="CENTER">
+                           <font>
+                              <Font name="Haettenschweiler" size="27.0" />
+                           </font>
+                        </Button>
+                        <Text fill="WHITE" layoutX="75.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select difficulty" textAlignment="CENTER" wrappingWidth="350.13671875">
+                           <font>
+                              <Font name="Haettenschweiler" size="30.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="300.0" layoutY="140.0" prefHeight="100.0" prefWidth="400.0">
+                     <children>
+                        <Text fx:id="numWinsMsg" fill="#ff9292" layoutX="65.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WINS PLACEHOLDER" textAlignment="CENTER" wrappingWidth="269.13671875">
+                           <font>
+                              <Font name="Haettenschweiler" size="40.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
