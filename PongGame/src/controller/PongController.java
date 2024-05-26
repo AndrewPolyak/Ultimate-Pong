@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import model.Ball;
 
@@ -17,13 +18,15 @@ import model.Ball;
  */
 public class PongController {
 
+	private Circle ball;
+	private Rectangle plyPaddle;
+	private Rectangle oppPaddle;
 	private Text plyScore;
 	private Text oppScore;
 	private AnimationTimer animate;
 	private SecureRandom random;
-	private Circle ball;
-	AnchorPane gameEndPane;
-	Text gameResultMsg;
+	private AnchorPane gameEndPane;
+	private Text gameResultMsg;
 	
 	private double VELOCITY_INCREASE = 0.5;
 	
@@ -31,6 +34,9 @@ public class PongController {
 	private int BOTTOM_WALL = 575;
 	private int LEFT_WALL = 0;
 	private int RIGHT_WALL = 1000;
+	
+	private double PLY_PADDLE_X = 830;
+	private double OPP_PADDLE_X = 170;
 	
 	private double BALL_X_SPAWN_START = 502;
 	private double BALL_Y_SPAWN_START = 325;
@@ -53,9 +59,22 @@ public class PongController {
 	private boolean gameOn;
 	
 	
-	public PongController(Circle ball, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
+	/**
+	 * TODO
+	 * 
+	 * @param ball
+	 * @param plyPaddle
+	 * @param oppPaddle
+	 * @param plyScore
+	 * @param oppScore
+	 * @param gameEndPane
+	 * @param gameResultMsg
+	 */
+	public PongController(Circle ball, Rectangle plyPaddle, Rectangle oppPaddle, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
 		this.random = new SecureRandom();
 		this.ball = ball;
+		this.plyPaddle = plyPaddle;
+		this.oppPaddle = oppPaddle;
 		this.plyScore = plyScore;
 		this.oppScore = oppScore;
 		this.gameEndPane = gameEndPane;
@@ -66,8 +85,15 @@ public class PongController {
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	public void startAnimation() {
-		animate = new AnimationTimer() {
+		this.animate = new AnimationTimer() {
+			
+			/**
+			 * TODO
+			 */
 			@Override
 			public void handle(long now) {
 				moveBall();
@@ -77,20 +103,27 @@ public class PongController {
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	private void moveBall() {
-		if (gameOn) {
-			directBall();
-			bounceBall();
-			score();
-			endGame();
+		if (this.gameOn) {
+			this.directBall();
+			this.bounceBall(); // FIXME, doesn't detect paddle on first ball movement
+			this.score();
+			this.endGame();
 		}
 	}
 
 
+	/**
+	 * TODO
+	 */
 	private void directBall() {
 		// Pick the horizontal movement
 		if (this.directionRight) {
 			this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go right
+			
 		} else {
 			this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go left
 		}
@@ -101,104 +134,145 @@ public class PongController {
 		 */
 		if (directionVertical == 1) {
 			this.ball.setLayoutY(this.ball.getLayoutY() + this.yVelocity); // Go down
+			
 		} else if (this.directionVertical == 2) {
 			this.ball.setLayoutY(this.ball.getLayoutY() - this.yVelocity); // Go up
 		}
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	private void bounceBall() {
-		
-		// If ball touches floor or ceiling, make it bounce off of that surface
-		if (this.ball.getLayoutY() <= (TOP_WALL + ball.getRadius())) { // If ball touches the ceiling, bounce it down & increase speed
-			increaseSpeed();
-			
+		if (this.ball.getLayoutY() <= (TOP_WALL + this.ball.getRadius())) { // If ball touches the ceiling, bounce it down & increase speed
+			this.increaseSpeed();
 			this.yVelocity = -this.yVelocity; // Reverse y direction
 			this.ball.setLayoutY(this.ball.getLayoutY() - (this.yVelocity)); // Go down
 			
-		} else if (this.ball.getLayoutY() >= (BOTTOM_WALL - ball.getRadius())) { // If ball touches floor, bounce it up & increase speed
-			increaseSpeed();
-			
+		} else if (this.ball.getLayoutY() >= (this.BOTTOM_WALL - this.ball.getRadius())) { // If ball touches floor, bounce it up & increase speed
+			this.increaseSpeed();
 			this.yVelocity = -this.yVelocity; // Reverse y direction
 			this.ball.setLayoutY(this.ball.getLayoutY() + this.yVelocity); // Go up
+		
+		// If ball touches the player's paddle (right side), bounce it left & increase speed 
+		} else if (((this.ball.getLayoutX() >= this.PLY_PADDLE_X - 7.5) && (this.ball.getLayoutX() <= this.PLY_PADDLE_X + 7.5)) && // If the ball & paddle are within the same x-coords
+				(((this.plyPaddle.getLayoutY() - 35) <= this.ball.getLayoutY() - ball.getRadius()) && // If the ball is below the top of the paddle
+				(this.plyPaddle.getLayoutY() + 35) >= this.ball.getLayoutY() + ball.getRadius())) { // If the ball is above the bottom of the paddle
+			this.bounceOffPaddle();
+			
+		// If ball touches the opponent's paddle (left side), bounce it right & increase speed 
+		} else if (((this.ball.getLayoutX() >= this.OPP_PADDLE_X - 7.5) && (this.ball.getLayoutX() <= this.OPP_PADDLE_X + 7.5)) && // If the ball & paddle are within the same x-coords
+				(((this.oppPaddle.getLayoutY() - 35) <= this.ball.getLayoutY() - ball.getRadius()) && // If the ball is below the top of the paddle
+				(this.oppPaddle.getLayoutY() + 35) >= this.ball.getLayoutY() + ball.getRadius())) { // If the ball is above the bottom of the paddle
+			this.bounceOffPaddle();
 		}
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	private void increaseSpeed() {
 		// Increase speed
 		this.xVelocity += this.VELOCITY_INCREASE;
 		
 		if (this.ball.getLayoutX() > 500) { // If the ball is on the right side of the field
 			this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go right, faster
+			
 		} else if (this.ball.getLayoutX() < 500) { // If the ball is on the left side of the field
 			this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go left, faster
 		}
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	private void score() {
-		if ((ball.getLayoutX() - ball.getRadius()) <= LEFT_WALL) {
-			plyScore.setText((Integer.parseInt(plyScore.getText()) + 1) + "");
-			resetBall();
-			moveBall();
-		} else if ((ball.getLayoutX() + ball.getRadius()) >= RIGHT_WALL) {
-			oppScore.setText((Integer.parseInt(oppScore.getText()) + 1) + "");
-			resetBall();
-			moveBall();
+		if ((this.ball.getLayoutX() - this.ball.getRadius()) <= this.LEFT_WALL) {
+			this.plyScore.setText((Integer.parseInt(this.plyScore.getText()) + 1) + "");
+			this.resetBall();
+			this.moveBall();
+			
+		} else if ((this.ball.getLayoutX() + this.ball.getRadius()) >= this.RIGHT_WALL) {
+			this.oppScore.setText((Integer.parseInt(this.oppScore.getText()) + 1) + "");
+			this.resetBall();
+			this.moveBall();
 		}
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	private void resetBall() {
-		
-		boolean randYSpawn= random.nextBoolean(); // If true, then spawn skew will be added, else it will be subtracted
-		this.ballYSpawn = BALL_Y_SPAWN_START;
+		boolean randYSpawn = this.random.nextBoolean(); // If true, then spawn skew will be added, else it will be subtracted
+		this.ballYSpawn = this.BALL_Y_SPAWN_START;
 		
 		// Randomize the location of the ball spawns
 		if (randYSpawn) { // Skew spawn downward
-			this.ballYSpawn += random.nextInt(125);
+			this.ballYSpawn += this.random.nextInt(125);
+			
 		} else { // Skew spawn upward
-			this.ballYSpawn -= random.nextInt(125);
+			this.ballYSpawn -= this.random.nextInt(125);
 		}
 		
-		this.yVelocity = random.nextDouble() * (Y_VELOCITY_MAX - Y_VELOCITY_MIN) + Y_VELOCITY_MIN; // Randomize Y velocity (angle of ball trajectory)
+		this.yVelocity = this.random.nextDouble() * (this.Y_VELOCITY_MAX - this.Y_VELOCITY_MIN) + this.Y_VELOCITY_MIN; // Randomize Y velocity (angle of ball trajectory)
 		
-		this.ball.setLayoutX(ballXSpawn);
-		this.ball.setLayoutY(ballYSpawn);
-		this.directionRight = random.nextBoolean();
-		this.directionVertical = random.nextInt(3);
-		this.xVelocity = X_VELOCITY_START;
+		this.ball.setLayoutX(this.ballXSpawn);
+		this.ball.setLayoutY(this.ballYSpawn);
+		this.directionRight = this.random.nextBoolean();
+		this.directionVertical = this.random.nextInt(3);
+		this.xVelocity = this.X_VELOCITY_START;
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	private void endGame() {
-		if (Integer.parseInt(plyScore.getText()) == 10) {
-			gameOn = false;
-			this.ballXSpawn = BALL_X_SPAWN_START;
-			this.ballYSpawn = BALL_Y_SPAWN_START;
-			resetBall();
-			displayResults(true);
+		if (Integer.parseInt(this.plyScore.getText()) == 10) {
+			this.gameOn = false;
+			this.ballXSpawn = this.BALL_X_SPAWN_START;
+			this.ballYSpawn = this.BALL_Y_SPAWN_START;
+			this.resetBall();
+			this.displayResults(true);
+			
 		} else if (Integer.parseInt(oppScore.getText()) == 10) {
-			gameOn = false;
-			this.ballXSpawn = BALL_X_SPAWN_START;
-			this.ballYSpawn = BALL_Y_SPAWN_START;
-			resetBall();
-			displayResults(false);
+			this.gameOn = false;
+			this.ballXSpawn = this.BALL_X_SPAWN_START;
+			this.ballYSpawn = this.BALL_Y_SPAWN_START;
+			this.resetBall();
+			this.displayResults(false);
 		}
 	}
 	
 	
+	/**
+	 * TODO
+	 * 
+	 * @param won
+	 */
 	private void displayResults(boolean won) {
 		this.xVelocity = 0;
 		this.yVelocity = 0;
 		this.gameEndPane.setVisible(true);
 		
 		if (won) {
-			gameResultMsg.setText("YOU WIN"); // FIXME MVC
+			this.gameResultMsg.setText("YOU WIN"); // FIXME MVC
+			
 		} else {
-			gameResultMsg.setText("YOU LOSE"); // FIXME MVC
+			this.gameResultMsg.setText("YOU LOSE"); // FIXME MVC
 		}
+	}
+	
+	
+	/**
+	 * TODO
+	 */
+	private void bounceOffPaddle() {
+		// TODO
 	}
 
 }
