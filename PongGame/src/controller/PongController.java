@@ -15,7 +15,7 @@ import model.Ball;
  * @author Andrew Polyak
  * @version TODO
  */
-public class GameController {
+public class PongController {
 
 	private Text plyScore;
 	private Text oppScore;
@@ -32,11 +32,17 @@ public class GameController {
 	private int LEFT_WALL = 0;
 	private int RIGHT_WALL = 1000;
 	
-	private int BALL_SPAWN_X = 502;
-	private int BALL_SPAWN_Y = 325;
+	private double BALL_X_SPAWN_START = 502;
+	private double BALL_Y_SPAWN_START = 325;
 	
-	private double X_VELOCITY_START = 1.0;
-	private double Y_VELOCITY_START = 1.0;
+	private double ballXSpawn = BALL_X_SPAWN_START;
+	private double ballYSpawn = BALL_Y_SPAWN_START;
+	
+	private double X_VELOCITY_START = 10.0; // Controls the horizontal speed of the ball**
+	private double Y_VELOCITY_START = 10.0; // Controls the vertical speed of the ball**
+	
+	private double Y_VELOCITY_MIN = Y_VELOCITY_START; // Min ball Y velocity
+	private double Y_VELOCITY_MAX = 2.0; // Max ball Y velocity
 	
 	private double xVelocity = X_VELOCITY_START;
 	private double yVelocity = Y_VELOCITY_START;
@@ -44,8 +50,10 @@ public class GameController {
 	private boolean directionRight;
 	private int directionVertical;
 	
+	private boolean gameOn;
 	
-	public GameController(Circle ball, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
+	
+	public PongController(Circle ball, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
 		this.random = new SecureRandom();
 		this.ball = ball;
 		this.plyScore = plyScore;
@@ -54,6 +62,7 @@ public class GameController {
 		this.gameResultMsg = gameResultMsg;
 		this.directionRight = random.nextBoolean();
 		this.directionVertical = random.nextInt(3);
+		this.gameOn = true;
 	}
 	
 	
@@ -69,10 +78,12 @@ public class GameController {
 	
 	
 	private void moveBall() {
-		directBall();
-		bounceBall();
-		score();
-		endGame();
+		if (gameOn) {
+			directBall();
+			bounceBall();
+			score();
+			endGame();
+		}
 	}
 
 
@@ -92,8 +103,6 @@ public class GameController {
 			this.ball.setLayoutY(this.ball.getLayoutY() + this.yVelocity); // Go down
 		} else if (this.directionVertical == 2) {
 			this.ball.setLayoutY(this.ball.getLayoutY() - this.yVelocity); // Go up
-		} else {
-			this.xVelocity = 2.0;
 		}
 	}
 	
@@ -131,12 +140,10 @@ public class GameController {
 	private void score() {
 		if ((ball.getLayoutX() - ball.getRadius()) <= LEFT_WALL) {
 			plyScore.setText((Integer.parseInt(plyScore.getText()) + 1) + "");
-			
 			resetBall();
 			moveBall();
 		} else if ((ball.getLayoutX() + ball.getRadius()) >= RIGHT_WALL) {
 			oppScore.setText((Integer.parseInt(oppScore.getText()) + 1) + "");
-
 			resetBall();
 			moveBall();
 		}
@@ -144,21 +151,38 @@ public class GameController {
 	
 	
 	private void resetBall() {
-		this.ball.setLayoutX(BALL_SPAWN_X);
-		this.ball.setLayoutY(BALL_SPAWN_Y);
+		
+		boolean randYSpawn= random.nextBoolean(); // If true, then spawn skew will be added, else it will be subtracted
+		this.ballYSpawn = BALL_Y_SPAWN_START;
+		
+		// Randomize the location of the ball spawns
+		if (randYSpawn) { // Skew spawn downward
+			this.ballYSpawn += random.nextInt(125);
+		} else { // Skew spawn upward
+			this.ballYSpawn -= random.nextInt(125);
+		}
+		
+		this.yVelocity = random.nextDouble() * (Y_VELOCITY_MAX - Y_VELOCITY_MIN) + Y_VELOCITY_MIN; // Randomize Y velocity (angle of ball trajectory)
+		
+		this.ball.setLayoutX(ballXSpawn);
+		this.ball.setLayoutY(ballYSpawn);
 		this.directionRight = random.nextBoolean();
 		this.directionVertical = random.nextInt(3);
 		this.xVelocity = X_VELOCITY_START;
-		this.yVelocity = Y_VELOCITY_START;
 	}
 	
 	
 	private void endGame() {
 		if (Integer.parseInt(plyScore.getText()) == 10) {
+			gameOn = false;
+			this.ballXSpawn = BALL_X_SPAWN_START;
+			this.ballYSpawn = BALL_Y_SPAWN_START;
 			resetBall();
 			displayResults(true);
-			
 		} else if (Integer.parseInt(oppScore.getText()) == 10) {
+			gameOn = false;
+			this.ballXSpawn = BALL_X_SPAWN_START;
+			this.ballYSpawn = BALL_Y_SPAWN_START;
 			resetBall();
 			displayResults(false);
 		}
