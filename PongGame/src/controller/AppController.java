@@ -129,7 +129,7 @@ public class AppController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	PongController play = new PongController(ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg);
+    	PongController play = new PongController(gameView, ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg);
     	play.startAnimation();
     }
     
