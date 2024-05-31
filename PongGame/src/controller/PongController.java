@@ -27,7 +27,7 @@ public class PongController {
 	private AnchorPane gameEndPane;
 	private Text gameResultMsg;
 	
-	private double VELOCITY_INCREASE = 0.5;
+	private double VELOCITY_INCREASE = 2;
 	
 	private int TOP_WALL = 79;
 	private int BOTTOM_WALL = 575;
@@ -170,17 +170,17 @@ public class PongController {
 		
 		// Handle paddle bouncing
 		// If ball touches the player's paddle (right side), bounce it left & increase speed 
-		if ((((this.ball.getLayoutX() >= this.PLY_PADDLE_X - ball.getRadius()) && ((this.ball.getLayoutX() + ball.getRadius()) <= this.PLY_PADDLE_X + 7.5)) && // If the ball & paddle are within the same x-coords
+		if ((((this.ball.getLayoutX() >= this.PLY_PADDLE_X - ball.getRadius()) && ((this.ball.getLayoutX() + ball.getRadius()) <= this.PLY_PADDLE_X + 7.5 * 3)) && // If the ball & paddle are within the same x-coords
 				(((this.plyPaddle.getLayoutY()) <= (this.ball.getLayoutY() + this.ball.getRadius())) && // If the ball is below the top of the paddle
-				(this.plyPaddle.getLayoutY() + plyPaddle.getHeight()) >= this.ball.getLayoutY() + this.ball.getRadius()))) { // If the ball is above the bottom of the paddle
+				(this.plyPaddle.getLayoutY() + plyPaddle.getHeight()) + this.ball.getRadius() >= this.ball.getLayoutY()))) { // If the ball is above the bottom of the paddle
 			this.increaseSpeed();
 			this.bounceOffPaddle(plyPaddle);
 			System.out.println("ply");
 			
 		// If ball touches the opponent's paddle (left side), bounce it right & increase speed 
-		} else if ((((this.ball.getLayoutX() - ball.getRadius() >= this.OPP_PADDLE_X - 7.5) && (this.ball.getLayoutX() <= this.OPP_PADDLE_X + 15)) && // If the ball & paddle are within the same x-coords
-				(((this.oppPaddle.getLayoutY()) <= this.ball.getLayoutY() - this.ball.getRadius()) && // If the ball is below the top of the paddle
-				(this.oppPaddle.getLayoutY() + oppPaddle.getHeight()) >= this.ball.getLayoutY() - this.ball.getRadius()))) { // If the ball is above the bottom of the paddle
+		} else if ((((this.ball.getLayoutX() >= this.OPP_PADDLE_X - ball.getRadius() ) && ((this.ball.getLayoutX() + ball.getRadius()) <= this.OPP_PADDLE_X + 7.5 + oppPaddle.getWidth() * 2)) && // If the ball & paddle are within the same x-coords
+				(((this.oppPaddle.getLayoutY()) <= (this.ball.getLayoutY() + this.ball.getRadius())) && // If the ball is below the top of the paddle
+				(this.oppPaddle.getLayoutY() + oppPaddle.getHeight()) + this.ball.getRadius() >= this.ball.getLayoutY()))) { // If the ball is above the bottom of the paddle
 			this.increaseSpeed();
 			this.bounceOffPaddle(oppPaddle);
 			System.out.println("opp");
@@ -193,13 +193,14 @@ public class PongController {
 	 */
 	private void increaseSpeed() {
 		// Increase speed
-		this.xVelocity += this.VELOCITY_INCREASE;
-		
-		if (this.ball.getLayoutX() > 500) { // If the ball is on the right side of the field
-			this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go right, faster
+		if (this.xVelocity < 6) { // FIXME this function gets continually called, making the ball go way too fast if it keeps bouncing
+			this.xVelocity *= this.VELOCITY_INCREASE;
 			
-		} else if (this.ball.getLayoutX() < 500) { // If the ball is on the left side of the field
-			this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go left, faster
+			if (this.ball.getLayoutX() > BALL_X_SPAWN_START) {
+				this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go left
+			} else if (this.ball.getLayoutX() < BALL_X_SPAWN_START) {
+				this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go right
+			}
 		}
 	}
 	
