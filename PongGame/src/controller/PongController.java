@@ -43,8 +43,8 @@ public class PongController {
 	private double ballXSpawn = BALL_X_SPAWN_START;
 	private double ballYSpawn = BALL_Y_SPAWN_START;
 	
-	private double X_VELOCITY_START = 1.0; // Controls the horizontal speed of the ball**
-	private double Y_VELOCITY_START = 1.0; // Controls the vertical speed of the ball**
+	private double X_VELOCITY_START = 3.0; // Controls the horizontal speed of the ball**
+	private double Y_VELOCITY_START = 3.0; // Controls the vertical speed of the ball**
 	
 	private double Y_VELOCITY_MIN = Y_VELOCITY_START; // Min ball Y velocity
 	private double Y_VELOCITY_MAX = 2.0; // Max ball Y velocity
@@ -162,32 +162,27 @@ public class PongController {
 	 */
 	private void bounceBall() {
 		// Handle floor & ceiling bouncing
-		if (this.ball.getLayoutY() <= (TOP_WALL + this.ball.getRadius())) { // If ball touches the ceiling, bounce it down & increase speed
+		if ((this.ball.getLayoutY() <= (TOP_WALL + this.ball.getRadius())) ||
+		(this.ball.getLayoutY() >= (this.BOTTOM_WALL - this.ball.getRadius()))) {
 			this.increaseSpeed();
 			this.yVelocity = -this.yVelocity; // Reverse y direction
-			this.ball.setLayoutY(this.ball.getLayoutY() - (this.yVelocity)); // Go down
-			
-		} else if (this.ball.getLayoutY() >= (this.BOTTOM_WALL - this.ball.getRadius())) { // If ball touches floor, bounce it up & increase speed
-			this.increaseSpeed();
-			this.yVelocity = -this.yVelocity; // Reverse y direction
-			this.ball.setLayoutY(this.ball.getLayoutY() + this.yVelocity); // Go up
-		}
+		} 
 		
 		// Handle paddle bouncing
 		// If ball touches the player's paddle (right side), bounce it left & increase speed 
-		if (((this.ball.getLayoutX() >= this.PLY_PADDLE_X - 7.5) && (this.ball.getLayoutX() <= this.PLY_PADDLE_X + 7.5)) && // If the ball & paddle are within the same x-coords
-				(((this.plyPaddle.getLayoutY()) <= this.ball.getLayoutY() + this.ball.getRadius()) && // If the ball is below the top of the paddle
-				(this.plyPaddle.getLayoutY() + plyPaddle.getHeight()) >= this.ball.getLayoutY() + this.ball.getRadius())) { // If the ball is above the bottom of the paddle
+		if ((((this.ball.getLayoutX() >= this.PLY_PADDLE_X - ball.getRadius()) && ((this.ball.getLayoutX() + ball.getRadius()) <= this.PLY_PADDLE_X + 7.5)) && // If the ball & paddle are within the same x-coords
+				(((this.plyPaddle.getLayoutY()) <= (this.ball.getLayoutY() + this.ball.getRadius())) && // If the ball is below the top of the paddle
+				(this.plyPaddle.getLayoutY() + plyPaddle.getHeight()) >= this.ball.getLayoutY() + this.ball.getRadius()))) { // If the ball is above the bottom of the paddle
 			this.increaseSpeed();
-			this.bounceOffPaddle();
+			this.bounceOffPaddle(plyPaddle);
 			System.out.println("ply");
 			
 		// If ball touches the opponent's paddle (left side), bounce it right & increase speed 
-		} else if (((this.ball.getLayoutX() >= this.OPP_PADDLE_X - 7.5) && (this.ball.getLayoutX() <= this.OPP_PADDLE_X + 7.5)) && // If the ball & paddle are within the same x-coords
-				(((this.oppPaddle.getLayoutY()) <= this.ball.getLayoutY() + this.ball.getRadius()) && // If the ball is below the top of the paddle
-				(this.oppPaddle.getLayoutY() + oppPaddle.getHeight()) >= this.ball.getLayoutY() + this.ball.getRadius())) { // If the ball is above the bottom of the paddle
+		} else if ((((this.ball.getLayoutX() - ball.getRadius() >= this.OPP_PADDLE_X - 7.5) && (this.ball.getLayoutX() <= this.OPP_PADDLE_X + 15)) && // If the ball & paddle are within the same x-coords
+				(((this.oppPaddle.getLayoutY()) <= this.ball.getLayoutY() - this.ball.getRadius()) && // If the ball is below the top of the paddle
+				(this.oppPaddle.getLayoutY() + oppPaddle.getHeight()) >= this.ball.getLayoutY() - this.ball.getRadius()))) { // If the ball is above the bottom of the paddle
 			this.increaseSpeed();
-			this.bounceOffPaddle();
+			this.bounceOffPaddle(oppPaddle);
 			System.out.println("opp");
 		}
 	}
@@ -293,9 +288,29 @@ public class PongController {
 	
 	/**
 	 * TODO
+	 * 
 	 */
-	private void bounceOffPaddle() {
-		// TODO
+	private void bounceOffPaddle(Rectangle paddle) {
+		
+		// Reverse x direction
+		this.xVelocity = -this.xVelocity;
+			
+		if (this.ball.getLayoutX() > BALL_X_SPAWN_START) {
+			this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go left
+		} else if (this.ball.getLayoutX() < BALL_X_SPAWN_START) {
+			this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go right
+		}
+		
+		
+		//if (((paddle.getLayoutY()) <= (this.ball.getLayoutY() - this.ball.getRadius())) &&
+		//		((paddle.getLayoutY() + 15) > this.ball.getLayoutY())) { // If the ball is bouncing off of the top portion of the paddle, direct ball diagonally upwards away from the it
+		//	this.yVelocity = -this.yVelocity;
+		//	
+		//} else if (((paddle.getLayoutY() + 55) <= this.ball.getLayoutY() + this.ball.getRadius()) &&
+		//		((paddle.getLayoutY() + 70) > this.ball.getLayoutY())) { // If the ball is bouncing off of the bottom portion of the paddle, direct ball diagonally downwards away from the it
+		//	this.yVelocity = -this.yVelocity;
+			
+		//}
 	}
 	
 
