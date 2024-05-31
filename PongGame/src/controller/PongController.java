@@ -93,6 +93,7 @@ public class PongController {
 			public void handle(long now) {
 				moveBall();
 				movePlyPaddle();
+				moveOppPaddle();
 			}
 		};
 		this.animate.start();
@@ -124,6 +125,25 @@ public class PongController {
 		} else if (plyPaddle.getLayoutY() > BOTTOM_WALL - plyPaddle.getHeight()) {
 			plyPaddle.setLayoutY(BOTTOM_WALL - plyPaddle.getHeight());
 		}
+	}
+	
+	
+	private void moveOppPaddle() {
+		
+		if (this.ball.getLayoutY() < (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2)) { // If ball is above paddle
+			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() - 4);
+			
+		} else if (this.ball.getLayoutY() > (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2)) { // If ball is below paddle
+			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() + 4); // TODO paddle speed, make this a variable
+		}
+		
+		// Ensure paddle does not leave the playing field
+		if (oppPaddle.getLayoutY() < TOP_WALL) {
+			oppPaddle.setLayoutY(TOP_WALL);
+		} else if (oppPaddle.getLayoutY() > BOTTOM_WALL - oppPaddle.getHeight()) {
+			oppPaddle.setLayoutY(BOTTOM_WALL - oppPaddle.getHeight());
+		}
+		
 	}
 
 
@@ -165,12 +185,12 @@ public class PongController {
 		// Handle paddle bouncing
 		// If ball touches the player's paddle (right side), bounce it left & increase speed 
 		if (this.ballIntersectsPaddle(this.plyPaddle)) {
-			this.xVelocity = -this.xVelocity;
+			bounceOffPaddle(plyPaddle);
 			System.out.println("ply");
 			
 		// If ball touches the opponent's paddle (left side), bounce it right & increase speed 
 		} else if (ballIntersectsPaddle(this.oppPaddle)) {
-			this.xVelocity = -this.xVelocity;
+			bounceOffPaddle(oppPaddle);
 			System.out.println("opp");
 		}
 	}
@@ -275,21 +295,21 @@ public class PongController {
 	private void bounceOffPaddle(Rectangle paddle) {
 		
 		// Reverse x direction
-		//this.xVelocity = -this.xVelocity;
+		this.xVelocity = -this.xVelocity;
 		
 		
-		//if (this.ball.getLayoutY() < paddle.getLayoutY() + 15) {
-		//	if (this.yVelocity > 0) {
-		//		this.yVelocity = -this.yVelocity;
+		if (this.ball.getLayoutY() < paddle.getLayoutY() + 15) {
+			if (this.yVelocity > 0) {
+				this.yVelocity = -this.yVelocity;
 				
-		//	}
+			}
 			
-		//} else if (this.ball.getLayoutY() > paddle.getLayoutY() + 55) {
-		//	if (this.yVelocity < 0) {
-		//		this.yVelocity = -this.yVelocity;
+		} else if (this.ball.getLayoutY() > paddle.getLayoutY() + 55) {
+			if (this.yVelocity < 0) {
+				this.yVelocity = -this.yVelocity;
 				
-		//	}
-		//}
+			}
+		}
 	}
 	
 
