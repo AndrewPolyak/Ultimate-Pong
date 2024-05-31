@@ -27,33 +27,28 @@ public class PongController {
 	private AnchorPane gameEndPane;
 	private Text gameResultMsg;
 	
-	private double VELOCITY_INCREASE = 2;
+	private final int TOP_WALL = 79;
+	private final int BOTTOM_WALL = 575;
+	private final int LEFT_WALL = 0;
+	private final int RIGHT_WALL = 1000;
 	
-	private int TOP_WALL = 79;
-	private int BOTTOM_WALL = 575;
-	private int LEFT_WALL = 0;
-	private int RIGHT_WALL = 1000;
-	
-	private double PLY_PADDLE_X = 830;
-	private double OPP_PADDLE_X = 170;
-	
-	private double BALL_X_SPAWN_START = 502;
-	private double BALL_Y_SPAWN_START = 325;
+	private final double BALL_X_SPAWN_START = 502;
+	private final double BALL_Y_SPAWN_START = 325;
 	
 	private double ballXSpawn = BALL_X_SPAWN_START;
 	private double ballYSpawn = BALL_Y_SPAWN_START;
 	
-	private double X_VELOCITY_START = 3.0; // Controls the horizontal speed of the ball**
-	private double Y_VELOCITY_START = 3.0; // Controls the vertical speed of the ball**
+	private final double X_VELOCITY_START = 6; // Controls the horizontal speed of the ball**
+	private final double Y_VELOCITY_START = 6; // Controls the vertical speed of the ball**
 	
-	private double Y_VELOCITY_MIN = Y_VELOCITY_START; // Min ball Y velocity
-	private double Y_VELOCITY_MAX = 2.0; // Max ball Y velocity
+	private final double Y_VELOCITY_MIN = Y_VELOCITY_START; // Min ball Y velocity
+	private final double Y_VELOCITY_MAX = 2.0; // Max ball Y velocity
 	
 	private double xVelocity = X_VELOCITY_START;
 	private double yVelocity = Y_VELOCITY_START;
 	
 	private boolean directionRight;
-	private int directionVertical;
+	private boolean directionUp;
 	
 	private boolean gameOn;
 	
@@ -80,7 +75,7 @@ public class PongController {
 		this.gameResultMsg = gameResultMsg;
 		this.gameView = gameView;
 		this.directionRight = random.nextBoolean();
-		this.directionVertical = random.nextInt(3);
+		this.directionUp = random.nextBoolean();
 		this.gameOn = true;
 	}
 	
@@ -148,10 +143,10 @@ public class PongController {
 		 * Pick the vertical movement (will make movement diagonal)
 		 * 1 represents down, 2 represents up, and 3 represents neither (default straight horizontal)
 		 */
-		if (directionVertical == 1) {
+		if (!directionUp) {
 			this.ball.setLayoutY(this.ball.getLayoutY() + this.yVelocity); // Go down
 			
-		} else if (this.directionVertical == 2) {
+		} else {
 			this.ball.setLayoutY(this.ball.getLayoutY() - this.yVelocity); // Go up
 		}
 	}
@@ -164,46 +159,31 @@ public class PongController {
 		// Handle floor & ceiling bouncing
 		if ((this.ball.getLayoutY() <= (TOP_WALL + this.ball.getRadius())) ||
 		(this.ball.getLayoutY() >= (this.BOTTOM_WALL - this.ball.getRadius()))) {
-			this.increaseSpeed();
 			this.yVelocity = -this.yVelocity; // Reverse y direction
 		} 
 		
 		// Handle paddle bouncing
 		// If ball touches the player's paddle (right side), bounce it left & increase speed 
-		if ((((this.ball.getLayoutX() >= this.PLY_PADDLE_X - ball.getRadius()) && ((this.ball.getLayoutX() + ball.getRadius()) <= this.PLY_PADDLE_X + 7.5 * 3)) && // If the ball & paddle are within the same x-coords
-				(((this.plyPaddle.getLayoutY()) <= (this.ball.getLayoutY() + this.ball.getRadius())) && // If the ball is below the top of the paddle
-				(this.plyPaddle.getLayoutY() + plyPaddle.getHeight()) + this.ball.getRadius() >= this.ball.getLayoutY()))) { // If the ball is above the bottom of the paddle
-			this.increaseSpeed();
-			this.bounceOffPaddle(plyPaddle);
+		if (this.ballIntersectsPaddle(this.plyPaddle)) {
+			this.xVelocity = -this.xVelocity;
 			System.out.println("ply");
 			
 		// If ball touches the opponent's paddle (left side), bounce it right & increase speed 
-		} else if ((((this.ball.getLayoutX() >= this.OPP_PADDLE_X - ball.getRadius() ) && ((this.ball.getLayoutX() + ball.getRadius()) <= this.OPP_PADDLE_X + 7.5 + oppPaddle.getWidth() * 2)) && // If the ball & paddle are within the same x-coords
-				(((this.oppPaddle.getLayoutY()) <= (this.ball.getLayoutY() + this.ball.getRadius())) && // If the ball is below the top of the paddle
-				(this.oppPaddle.getLayoutY() + oppPaddle.getHeight()) + this.ball.getRadius() >= this.ball.getLayoutY()))) { // If the ball is above the bottom of the paddle
-			this.increaseSpeed();
-			this.bounceOffPaddle(oppPaddle);
+		} else if (ballIntersectsPaddle(this.oppPaddle)) {
+			this.xVelocity = -this.xVelocity;
 			System.out.println("opp");
 		}
 	}
 	
 	
 	/**
-	 * TODO
+	 * 
+	 * @param paddle
+	 * @return
 	 */
-	private void increaseSpeed() {
-		// Increase speed
-		if (this.xVelocity < 6) { // FIXME this function gets continually called, making the ball go way too fast if it keeps bouncing
-			this.xVelocity *= this.VELOCITY_INCREASE;
-			
-			if (this.ball.getLayoutX() > BALL_X_SPAWN_START) {
-				this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go left
-			} else if (this.ball.getLayoutX() < BALL_X_SPAWN_START) {
-				this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go right
-			}
-		}
-	}
-	
+	private boolean ballIntersectsPaddle(Rectangle paddle) {
+        return this.ball.getBoundsInParent().intersects(paddle.getBoundsInParent());
+    }
 	
 	/**
 	 * TODO
@@ -226,11 +206,11 @@ public class PongController {
 	 * TODO
 	 */
 	private void resetBall() {
-		boolean randYSpawn = this.random.nextBoolean(); // If true, then spawn skew will be added, else it will be subtracted
+		boolean xandYSpawn = this.random.nextBoolean(); // If true, then spawn skew will be added, else it will be subtracted
 		this.ballYSpawn = this.BALL_Y_SPAWN_START;
 		
 		// Randomize the location of the ball spawns
-		if (randYSpawn) { // Skew spawn downward
+		if (xandYSpawn) { // Skew spawn downward
 			this.ballYSpawn += this.random.nextInt(125);
 			
 		} else { // Skew spawn upward
@@ -242,7 +222,7 @@ public class PongController {
 		this.ball.setLayoutX(this.ballXSpawn);
 		this.ball.setLayoutY(this.ballYSpawn);
 		this.directionRight = this.random.nextBoolean();
-		this.directionVertical = this.random.nextInt(3);
+		this.directionUp = this.random.nextBoolean();
 		this.xVelocity = this.X_VELOCITY_START;
 	}
 	
@@ -289,28 +269,26 @@ public class PongController {
 	
 	/**
 	 * TODO
-	 * 
+	 * FIXME need to fix the y changing logic here
+	 * FIXME need to account for when the ball hits the top middle of the paddle
 	 */
 	private void bounceOffPaddle(Rectangle paddle) {
 		
 		// Reverse x direction
-		this.xVelocity = -this.xVelocity;
-			
-		if (this.ball.getLayoutX() > BALL_X_SPAWN_START) {
-			this.ball.setLayoutX(this.ball.getLayoutX() + this.xVelocity); // Go left
-		} else if (this.ball.getLayoutX() < BALL_X_SPAWN_START) {
-			this.ball.setLayoutX(this.ball.getLayoutX() - this.xVelocity); // Go right
-		}
+		//this.xVelocity = -this.xVelocity;
 		
 		
-		//if (((paddle.getLayoutY()) <= (this.ball.getLayoutY() - this.ball.getRadius())) &&
-		//		((paddle.getLayoutY() + 15) > this.ball.getLayoutY())) { // If the ball is bouncing off of the top portion of the paddle, direct ball diagonally upwards away from the it
-		//	this.yVelocity = -this.yVelocity;
-		//	
-		//} else if (((paddle.getLayoutY() + 55) <= this.ball.getLayoutY() + this.ball.getRadius()) &&
-		//		((paddle.getLayoutY() + 70) > this.ball.getLayoutY())) { // If the ball is bouncing off of the bottom portion of the paddle, direct ball diagonally downwards away from the it
-		//	this.yVelocity = -this.yVelocity;
+		//if (this.ball.getLayoutY() < paddle.getLayoutY() + 15) {
+		//	if (this.yVelocity > 0) {
+		//		this.yVelocity = -this.yVelocity;
+				
+		//	}
 			
+		//} else if (this.ball.getLayoutY() > paddle.getLayoutY() + 55) {
+		//	if (this.yVelocity < 0) {
+		//		this.yVelocity = -this.yVelocity;
+				
+		//	}
 		//}
 	}
 	
