@@ -56,6 +56,9 @@ public class PongController {
 	
 	private int numBounces = 0;
 	
+	private final long BOUNCE_COOLDOWN = 600; // in milliseconds
+	private long lastBounceTime;
+	
 	
 	/**
 	 * TODO
@@ -313,26 +316,31 @@ public class PongController {
 	
 	/**
 	 * TODO
-	 * FIXME need to fix the y changing logic here
 	 * FIXME need to account for when the ball hits the top middle of the paddle
 	 */
 	private void bounceOffPaddle(Rectangle paddle) {
 		
-		// Reverse x direction
-		this.xVelocity *= -1;
+		long currentTime = System.currentTimeMillis();
 		
-		
-		if (this.ball.getLayoutY() < paddle.getLayoutY() + 15) {
-			if (this.yVelocity > 0) {
-				this.yVelocity *= -1;
-				
-			}
+		if ((currentTime - lastBounceTime) > BOUNCE_COOLDOWN) {
+			// Reverse x direction
+			this.xVelocity *= -1;
 			
-		} else if (this.ball.getLayoutY() > paddle.getLayoutY() + 55) {
-			if (this.yVelocity < 0) {
-				this.yVelocity *= -1;
+			if ((this.ball.getLayoutY() < paddle.getLayoutY() + 15) || // If the ball is in the top portion of the paddle
+					(this.ball.getLayoutX() > paddle.getLayoutX() && // If the ball is within the left side of the paddle
+							this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth())) { // And if the ball is within the right side of the paddle
+				if (this.yVelocity > 0) {
+					this.yVelocity *= -1;
+				}
 				
+			} else if ((this.ball.getLayoutY() > paddle.getLayoutY() + 55) || // If the ball is in the bottom portion of the paddle
+					(this.ball.getLayoutX() > paddle.getLayoutX() && // If the ball is within the left side of the paddle
+							this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth())) { // And if the ball is within the right side of the paddle
+				if (this.yVelocity < 0) {
+					this.yVelocity *= -1;
+				}
 			}
+			lastBounceTime = currentTime;
 		}
 	}
 	
