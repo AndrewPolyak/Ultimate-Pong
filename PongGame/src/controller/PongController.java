@@ -38,8 +38,8 @@ public class PongController {
 	private double ballXSpawn = BALL_X_SPAWN_START;
 	private double ballYSpawn = BALL_Y_SPAWN_START;
 	
-	private final double X_VELOCITY_START = 4.0; // Controls the horizontal speed of the ball**
-	private final double Y_VELOCITY_START = 4.0; // Controls the vertical speed of the ball**
+	private final double X_VELOCITY_START = 4.2; // Controls the horizontal speed of the ball**
+	private final double Y_VELOCITY_START = 4.2; // Controls the vertical speed of the ball**
 	
 	private final double Y_VELOCITY_MIN = Y_VELOCITY_START; // Min ball Y velocity
 	private final double Y_VELOCITY_MAX = 6.0; // Max ball Y velocity
@@ -138,10 +138,10 @@ public class PongController {
 	private void moveOppPaddle() {
 		
 		if (this.ball.getLayoutY() < (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2)) { // If ball is above paddle
-			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() - 6.6);
+			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() - 6.4);
 			
 		} else if (this.ball.getLayoutY() > (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2)) { // If ball is below paddle
-			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() + 6.6); // TODO paddle speed, make this a variable
+			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() + 6.4); // TODO paddle speed, make this a variable
 		}
 		
 		// Ensure paddle does not leave the playing field
@@ -183,7 +183,7 @@ public class PongController {
 	 * TODO
 	 */
 	private void bounceBall() {
-		// Handle floor & ceiling bouncing
+		// Handle floor & ceiling bouncing FIXME: Ball sometimes gets stuck in floor or ceiling if paddle pushes it into it
 		if ((this.ball.getLayoutY() <= (TOP_WALL + this.ball.getRadius())) ||
 		(this.ball.getLayoutY() >= (this.BOTTOM_WALL - this.ball.getRadius()))) {
 			this.yVelocity *= -1; // Reverse y direction
@@ -220,11 +220,11 @@ public class PongController {
 	
 	
 	private void increaseVelocity() {
-		if (numBounces <= 9) { // max speed will be 9.4
+		if (numBounces <= 9) { // max speed will be TODO
 			xVelocity *= SPEED_BOOST;
 		}
 		
-		if (numBounces <= 5) { // max speed will be 6.4
+		if (numBounces <= 5) { // max speed will be TODO
 			yVelocity *= SPEED_BOOST;
 		}
 	}
@@ -316,7 +316,7 @@ public class PongController {
 	
 	/**
 	 * TODO
-	 * FIXME need to account for when the ball hits the top middle of the paddle
+	 * 
 	 */
 	private void bounceOffPaddle(Rectangle paddle) {
 		
@@ -326,21 +326,24 @@ public class PongController {
 			// Reverse x direction
 			this.xVelocity *= -1;
 			
-			if ((this.ball.getLayoutY() < paddle.getLayoutY() + 15) || // If the ball is in the top portion of the paddle
+			if ((this.ball.getLayoutY() < paddle.getLayoutY() + 20) || // If the ball is in the top portion of the paddle
 					(this.ball.getLayoutX() > paddle.getLayoutX() && // If the ball is within the left side of the paddle
 							this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth())) { // And if the ball is within the right side of the paddle
 				if (this.yVelocity > 0) {
-					this.yVelocity *= -1;
+					this.yVelocity *= -1.1;
 				}
+				System.out.println("top");
 				
-			} else if ((this.ball.getLayoutY() > paddle.getLayoutY() + 55) || // If the ball is in the bottom portion of the paddle
+			} else if ((this.ball.getLayoutY() > paddle.getLayoutY() + 50) || // If the ball is in the bottom portion of the paddle
 					(this.ball.getLayoutX() > paddle.getLayoutX() && // If the ball is within the left side of the paddle
 							this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth())) { // And if the ball is within the right side of the paddle
 				if (this.yVelocity < 0) {
-					this.yVelocity *= -1;
+					this.yVelocity *= -1.1;
 				}
-			}
-			lastBounceTime = currentTime;
+				System.out.println("bottom");
+				
+			} 
+			lastBounceTime = currentTime;	
 		}
 	}
 	

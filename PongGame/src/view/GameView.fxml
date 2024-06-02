@@ -30,8 +30,8 @@
                      </font>
                   </Text>
                   <Circle fx:id="ball" fill="#cfff04" layoutX="502.0" layoutY="325.0" radius="7.5" stroke="WHITE" strokeType="INSIDE" />
-                  <Rectangle fx:id="plyPaddle" arcHeight="5.0" arcWidth="5.0" fill="#b9ff94" height="70.0" layoutX="835.0" layoutY="290.0" stroke="WHITE" strokeType="INSIDE" width="5.0" />
-                  <Rectangle fx:id="oppPaddle" arcHeight="5.0" arcWidth="5.0" fill="#ff9292" height="70.0" layoutX="170.0" layoutY="290.0" stroke="WHITE" strokeType="INSIDE" width="5.0" />
+                  <Rectangle fx:id="plyPaddle" arcHeight="5.0" arcWidth="5.0" fill="#b9ff94" height="70.0" layoutX="970.0" layoutY="290.0" stroke="WHITE" strokeType="INSIDE" width="15.0" />
+                  <Rectangle fx:id="oppPaddle" arcHeight="5.0" arcWidth="5.0" fill="#ff9292" height="70.0" layoutX="15.0" layoutY="290.0" stroke="WHITE" strokeType="INSIDE" width="15.0" />
                   <Text fx:id="plyName" fill="#b9ff94" layoutX="685.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You" textAlignment="RIGHT" wrappingWidth="300.13671875">
                      <font>
                         <Font name="Haettenschweiler" size="40.0" />
