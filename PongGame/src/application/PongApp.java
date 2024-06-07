@@ -11,7 +11,7 @@ public class PongApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/view/GameView.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/view/AppView.fxml"));
 			Scene scene = new Scene(root,1000,650);
 			primaryStage.setScene(scene);
 			primaryStage.show();

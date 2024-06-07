@@ -7,64 +7,75 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import view.GameViewMessages;
 
 /**
- * TODO
+ * The PongController class contains the main logic for controlling the pong gameplay
  * 
  * @author Andrew Polyak
- * @version TODO
+ * @version June 7, 2024
  */
 public class PongController {
 
-	private AnchorPane gameView;
-	private Circle ball;
-	private Rectangle plyPaddle;
-	private Rectangle oppPaddle;
-	private Text plyScore;
-	private Text oppScore;
-	private AnimationTimer animate;
-	private SecureRandom random;
-	private AnchorPane gameEndPane;
-	private Text gameResultMsg;
+	private AnchorPane gameView; // Represents the entire window
+	private Circle ball; // Represents the ball
+	private Rectangle plyPaddle; // Represents the user's paddle
+	private Rectangle oppPaddle; // Represents the opponent's paddle
+	private Text plyScore; // Represents the user's score
+	private Text oppScore; // Represents the opponent's score
+	private AnimationTimer animate; // Represents the AnimationTimer instance
+	private SecureRandom random; // Represents the SecureRandom instance
+	private AnchorPane gameEndPane; // Represents the game-end message
+	private Text gameResultMsg; // Represents the message within gameEndPane indicating the game winner
 	
-	private final int TOP_WALL = 79;
-	private final int BOTTOM_WALL = 575;
-	private final int LEFT_WALL = 0;
-	private final int RIGHT_WALL = 1000;
+	private GameViewMessages message; // Contains dynamic game messages
 	
+	// Define the boundaries of the playing field
+	private final int TOP_WALL = 79; // Y positon of the top wall
+	private final int BOTTOM_WALL = 575; // Y position of the bottom wall
+	private final int LEFT_WALL = 0; // X position of the left wall
+	private final int RIGHT_WALL = 1000; // X positon of the right wall
+	
+	// Define the starting spawn on the ball
 	private final double BALL_X_SPAWN_START = 502;
 	private final double BALL_Y_SPAWN_START = 325;
 	
-	private double ballYSpawn = BALL_Y_SPAWN_START;
+	private double ballYSpawn = BALL_Y_SPAWN_START; // The Y positon of the spawn may change, but initially it is set to BALL_Y_SPAWN_START
 	
-	private final double X_VELOCITY_START = 4.2; // Controls the horizontal speed of the ball**
-	private final double Y_VELOCITY_START = 4.2; // Controls the vertical speed of the ball**
+	private final int Y_SPAWN_SKEW = 125; // The Y position of the spawn may skew 125 up or down
 	
-	private final int Y_SPAWN_SKEW = 125;
+	// Define the velocity of the ball
+	private final double X_VELOCITY_START = 4.2; // Controls the starting horizontal speed of the ball**
+	private final double Y_VELOCITY_START = 4.2; // Controls the starting vertical speed of the ball**
 	
-	private final double Y_VELOCITY_MIN = Y_VELOCITY_START; // Min ball Y velocity
-	private final double Y_VELOCITY_MAX = 4.0; // Max ball Y velocity ... influences max vertical trajectory of initial ball movement
+	private final double Y_VELOCITY_MIN = 4.2; // The minimum amount of diagonal Y velocity
+	private final double Y_VELOCITY_MAX = 4.5; // The maximum amount of diagonal Y velocity ... influences max vertical trajectory of initial ball movement
 	
-	private final double SPEED_BOOST = 1.1;
+	private double xVelocity = X_VELOCITY_START; // At the beginning of the game, xVelocity is set to X_VELOCITY_START, but may change throughout
+	private double yVelocity = Y_VELOCITY_START; // At the beginning of the game, yVelocity is set to Y_VELOCITY_START, but may change throughout
 	
-	private double xVelocity = X_VELOCITY_START;
-	private double yVelocity = Y_VELOCITY_START;
+	private final double SPEED_BOOST = 1.1; // Define the speed boost amount
 	
+	// Define the direction of the ball
 	private boolean directionRight;
 	private boolean directionUp;
 	
-	private boolean gameOn;
+	private boolean gameOn; // Define whether the game is running (true) or is over (false)
 	
-	private int numBounces = 0;
+	private int numBounces = 0; // Counts the number of ball bounces in a round
 	
-	private final long BOUNCE_COOLDOWN = 600; // in milliseconds
-	private long lastBounceTime;
+	private final long PADDLE_BOUNCE_COOLDOWN = 600; // In milliseconds ... The ball can only bounce off a paddle once every 600 milliseconds
+	private long lastBounceTime; // Stores the millisecond value since the ball was last bounced
 	
-	private final int MAX_POINTS = 10;
+	private final int WINNING_SCORE = 10; // Defines the score a player must reach to win the game
+	
+	private final double OPP_PADDLE_VELOCITY = 6.4; // Controls the vertical speed of the opponent's paddle
 	
 	
 	/**
-	 * TODO
+	 * The PongController constructor takes in a number of JavaFX objects which represent the pong game stage, paddles, ball, and user interface <br>
+	 * It additionally instantiates key objects such as SecureRandom so as to randomly decide the starting direction of the ball <br>
+	 * Finally, gameOn, the boolean value representing whether the game is running, is set to true
 	 * 
 	 * @param ball
 	 * @param plyPaddle
@@ -76,6 +87,7 @@ public class PongController {
 	 */
 	public PongController(AnchorPane gameView, Circle ball, Rectangle plyPaddle, Rectangle oppPaddle, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
 		this.random = new SecureRandom();
+		this.message = new GameViewMessages();
 		this.ball = ball;
 		this.plyPaddle = plyPaddle;
 		this.oppPaddle = oppPaddle;
@@ -91,7 +103,7 @@ public class PongController {
 	
 	
 	/**
-	 * TODO
+	 * The startAnimation method instantiates an AnimationTimer to begin the "frames" of the game
 	 */
 	public void startAnimation() {
 		animate = new AnimationTimer() {
@@ -126,46 +138,6 @@ public class PongController {
 		directBall(); // Set ball movement
 		bounceBall(); // Detect & handle ball collisions
 	}
-	
-	
-	/**
-	 * TODO
-	 */
-	private void movePlyPaddle() { // TODO add a boolean option for mouse controls OR W and S button controls?
-		// Enable mouse control of the player paddle
-		gameView.setOnMouseMoved(e -> {
-			plyPaddle.setLayoutY(e.getY() - (plyPaddle.getHeight() / 2));
-		});
-		
-		// Ensure paddle does not leave the playing field
-		if (plyPaddle.getLayoutY() < TOP_WALL) {
-			plyPaddle.setLayoutY(TOP_WALL);
-		} else if (plyPaddle.getLayoutY() > BOTTOM_WALL - plyPaddle.getHeight()) {
-			plyPaddle.setLayoutY(BOTTOM_WALL - plyPaddle.getHeight());
-		}
-	}
-	
-	
-	/**
-	 * TODO
-	 */
-	private void moveOppPaddle() {
-		
-		if (this.ball.getLayoutY() < (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2)) { // If ball is above paddle
-			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() - 6.4);
-			
-		} else if (this.ball.getLayoutY() > (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2)) { // If ball is below paddle
-			this.oppPaddle.setLayoutY(this.oppPaddle.getLayoutY() + 6.4); // TODO paddle speed, make this a variable
-		}
-		
-		// Ensure paddle does not leave the playing field
-		if (oppPaddle.getLayoutY() < TOP_WALL) {
-			oppPaddle.setLayoutY(TOP_WALL);
-		} else if (oppPaddle.getLayoutY() > BOTTOM_WALL - oppPaddle.getHeight()) {
-			oppPaddle.setLayoutY(BOTTOM_WALL - oppPaddle.getHeight());
-		}
-		
-	}
 
 
 	/**
@@ -185,38 +157,6 @@ public class PongController {
 		} else {
 			directBallDown();
 		}
-	}
-	
-	
-	/**
-	 * The method directBallLeft moves the ball 1 X coordinate to the left
-	 */
-	private void directBallLeft() {
-		ball.setLayoutX(ball.getLayoutX() - xVelocity); // Go left
-	}
-	
-	
-	/**
-	 * The method directBallRight moves the ball 1 X coordinate to the right
-	 */
-	private void directBallRight() {
-		ball.setLayoutX(ball.getLayoutX() + xVelocity); // Go right
-	}
-	
-	
-	/**
-	 * The method directBallUp moves the ball 1 Y coordinate upward
-	 */
-	private void directBallUp() {
-		ball.setLayoutY(ball.getLayoutY() - yVelocity); // Go up
-	}
-	
-	
-	/**
-	 * The method directBallUp moves the ball 1 Y coordinate downward
-	 */
-	private void directBallDown() {
-		ball.setLayoutY(ball.getLayoutY() + yVelocity); // Go down
 	}
 
 
@@ -244,52 +184,6 @@ public class PongController {
 	
 	
 	/**
-	 * The wallCollision method detects ball contact with the ceiling or floor
-	 * 
-	 * @return true if in contact, false otherwise
-	 */
-	private boolean wallCollision() {
-		return (ball.getLayoutY() <= (TOP_WALL + ball.getRadius())) || (ball.getLayoutY() >= (BOTTOM_WALL - ball.getRadius())); // FIXME: Ball sometimes gets stuck in floor or ceiling if paddle pushes it into it
-	}
-	
-	
-	/**
-	 * The bounceOffWall method reverses ball's Y-axis movement & increments numBounces
-	 */
-	private void bounceOffWall() {
-		yVelocity *= -1; // Reverse y direction
-		numBounces++;
-	}
-	
-	
-	/**
-	 * The paddleCollision method detects whether the ball is in contact with a paddle (whether it be the player's or opponent's)
-	 * 
-	 * @param paddle
-	 * @return true if the ball contacts the paddle, false otherwise
-	 */
-	private boolean paddleCollision(Rectangle paddle) {
-        return ball.getBoundsInParent().intersects(paddle.getBoundsInParent());
-    }
-	
-	
-	/**
-	 * The increaseVelocity method applies a speed boost to the x and y velocity up to a specified limit
-	 */
-	private void increaseVelocity() {
-		// Increase xVelocity up to a limit
-		if (numBounces <= 9) { // Initial xVelocity is multiplied by SPEED_BOOST (1.1) 9 times
-			xVelocity *= SPEED_BOOST;
-		}
-		
-		// Increase yVelocity up to a limit
-		if (numBounces <= 5) { // Initial yVelocity is multiplied by SPEED_BOOST (1.1) 5 times
-			yVelocity *= SPEED_BOOST;
-		}
-	}
-	
-	
-	/**
 	 * The checkForScore method checks if a player has scored <br>
 	 * If a player has scored, then they are awarded 1 point <br>
 	 * The ball is then reset and begins moving again
@@ -304,36 +198,6 @@ public class PongController {
 			resetBall();
 			moveBall();
 		}
-	}
-	
-	
-	/**
-	 * The ballTouchingLeftWall method detects if the ball is touching the left wall of the field (i.e., the opponent's goal post)
-	 * 
-	 * @return true if ball is touching the left wall, false otherwise
-	 */
-	private boolean ballTouchingLeftWall() {
-		return (ball.getLayoutX() - ball.getRadius()) <= LEFT_WALL;
-	}
-	
-	
-	/**
-	 * The ballTouchingRightWall method detects if the ball is touching the right wall of the field (i.e., the player's goal post)
-	 * 
-	 * @return true if ball is touching the right wall, false otherwise
-	 */
-	private boolean ballTouchingRightWall() {
-		return (ball.getLayoutX() + ball.getRadius()) >= RIGHT_WALL;
-	}
-	
-	
-	/**
-	 * The addScore method increments a score tracker (whether it be the player's or opponent's) by 1
-	 * 
-	 * @param scoreTracker
-	 */
-	private void addScore(Text scoreTracker) {
-		scoreTracker.setText((Integer.parseInt(scoreTracker.getText()) + 1) + "");
 	}
 	
 	
@@ -378,9 +242,9 @@ public class PongController {
 	 * If a player has won, the displayResults method is subsequently called
 	 */
 	private void checkForGameEnd() {
-		if (Integer.parseInt(plyScore.getText()) == MAX_POINTS) { // If player won
+		if (Integer.parseInt(plyScore.getText()) == WINNING_SCORE) { // If player won
 			displayResults(true);
-		} else if (Integer.parseInt(oppScore.getText()) == MAX_POINTS) { // If opponent won
+		} else if (Integer.parseInt(oppScore.getText()) == WINNING_SCORE) { // If opponent won
 			displayResults(false);
 		}
 	}
@@ -408,9 +272,9 @@ public class PongController {
 		gameEndPane.setVisible(true);
 		
 		if (plyWon) {
-			gameResultMsg.setText("YOU WIN"); // FIXME MVC
+			gameResultMsg.setText(message.plyWinMsg());
 		} else {
-			gameResultMsg.setText("YOU LOSE"); // FIXME MVC
+			gameResultMsg.setText(message.plyLoseMsg());
 		}
 	}
 	
@@ -425,7 +289,7 @@ public class PongController {
 	private void bounceOffPaddle(Rectangle paddle) {
 		long currentTime = System.currentTimeMillis(); // Get current time in milliseconds
 		
-		if ((currentTime - lastBounceTime) > BOUNCE_COOLDOWN) { // If elapsed time since last bounce is longer than cooldown timer
+		if ((currentTime - lastBounceTime) > PADDLE_BOUNCE_COOLDOWN) { // If elapsed time since last bounce is longer than cooldown timer
 			xVelocity *= -1; // Bounce ball
 			
 			if (ballTouchingTopOfPaddle(paddle)) {
@@ -441,6 +305,190 @@ public class PongController {
 			lastBounceTime = currentTime; 
 		}
 		numBounces++; // The ball has bounced; increment this value
+	}
+	
+	
+	/**
+	 * The movePlyPaddle method allows the user to control their paddle <br>
+	 * The Y position of their paddle is equal to the Y position of their mouse
+	 */
+	private void movePlyPaddle() {
+		// Enable mouse control of the player paddle
+		gameView.setOnMouseMoved(e -> {
+			plyPaddle.setLayoutY(e.getY() - (plyPaddle.getHeight() / 2)); // Set the center of the paddle equal to the mouse's Y position
+		});
+		
+		// Ensure paddle does not clip out of the playing field
+		if (plyPaddle.getLayoutY() < TOP_WALL) {
+			plyPaddle.setLayoutY(TOP_WALL);
+		} else if (plyPaddle.getLayoutY() > BOTTOM_WALL - plyPaddle.getHeight()) {
+			plyPaddle.setLayoutY(BOTTOM_WALL - plyPaddle.getHeight());
+		}
+	}
+	
+	
+	/**
+	 * The moveOppPaddle method controls the AI of the opponents paddle <br>
+	 * If the ball is above the paddle, it moves up (and vice versa for below) <br>
+	 */
+	private void moveOppPaddle() {
+		if (ballAboveOppPaddle()) {
+			moveOppPaddleUp();
+		} else if (ballBelowOppPaddle()) {
+			moveOppPaddleDown();
+		}
+		
+		// Ensure paddle does not clip out of the playing field
+		if (oppPaddle.getLayoutY() < TOP_WALL) {
+			oppPaddle.setLayoutY(TOP_WALL);
+		} else if (oppPaddle.getLayoutY() > BOTTOM_WALL - oppPaddle.getHeight()) {
+			oppPaddle.setLayoutY(BOTTOM_WALL - oppPaddle.getHeight());
+		}
+	}
+	
+
+	/**
+	 * The ballAboveOppPaddle method checks whether the ball's Y coordinates are above the center of the opponent's paddle
+	 * 
+	 * @return true if the ball is above, false otherwise
+	 */
+	private boolean ballAboveOppPaddle() {
+		return ball.getLayoutY() < (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2); // If ball is above paddle
+	}
+	
+	
+	/**
+	 * The ballBelowOppPaddle method checks whether the ball's Y coordinates are below the center of the opponent's paddle
+	 * 
+	 * @return true if the ball is below, false otherwise
+	 */
+	private boolean ballBelowOppPaddle() {
+		return ball.getLayoutY() > (oppPaddle.getLayoutY() + oppPaddle.getHeight() / 2); // If ball is below paddle
+	}
+	
+	
+	/**
+	 * The moveOppPaddleUp method moves the opponent's paddle upward
+	 */
+	private void moveOppPaddleUp() {
+		oppPaddle.setLayoutY(oppPaddle.getLayoutY() - OPP_PADDLE_VELOCITY);
+	}
+	
+	
+	/**
+	 * The moveOppPaddleDown method moves the opponent's paddle downward
+	 */
+	private void moveOppPaddleDown() {
+		oppPaddle.setLayoutY(oppPaddle.getLayoutY() + OPP_PADDLE_VELOCITY);
+	}
+	
+	
+	/**
+	 * The method directBallLeft moves the ball 1 X coordinate to the left
+	 */
+	private void directBallLeft() {
+		ball.setLayoutX(ball.getLayoutX() - xVelocity); // Go left
+	}
+	
+	
+	/**
+	 * The method directBallRight moves the ball 1 X coordinate to the right
+	 */
+	private void directBallRight() {
+		ball.setLayoutX(ball.getLayoutX() + xVelocity); // Go right
+	}
+	
+	
+	/**
+	 * The method directBallUp moves the ball 1 Y coordinate upward
+	 */
+	private void directBallUp() {
+		ball.setLayoutY(ball.getLayoutY() - yVelocity); // Go up
+	}
+	
+	
+	/**
+	 * The method directBallUp moves the ball 1 Y coordinate downward
+	 */
+	private void directBallDown() {
+		ball.setLayoutY(ball.getLayoutY() + yVelocity); // Go down
+	}
+	
+	
+	/**
+	 * The wallCollision method detects ball contact with the ceiling or floor
+	 * 
+	 * @return true if in contact, false otherwise
+	 */
+	private boolean wallCollision() {
+		return (ball.getLayoutY() <= (TOP_WALL + ball.getRadius())) || 
+				(ball.getLayoutY() >= (BOTTOM_WALL - ball.getRadius())); // FIXME: Ball sometimes gets stuck in floor or ceiling if paddle pushes it into it
+	}
+	
+	
+	/**
+	 * The bounceOffWall method reverses ball's Y-axis movement & increments numBounces
+	 */
+	private void bounceOffWall() {
+		yVelocity *= -1; // Reverse y direction
+		numBounces++;
+	}
+	
+	
+	/**
+	 * The paddleCollision method detects whether the ball is in contact with a paddle (whether it be the player's or opponent's)
+	 * 
+	 * @param paddle
+	 * @return true if the ball contacts the paddle, false otherwise
+	 */
+	private boolean paddleCollision(Rectangle paddle) {
+        return ball.getBoundsInParent().intersects(paddle.getBoundsInParent());
+    }
+	
+	
+	/**
+	 * The increaseVelocity method applies a speed boost to the x and y velocity up to a specified limit
+	 */
+	private void increaseVelocity() {
+		// Increase xVelocity up to a limit
+		if (numBounces <= 9) { // Initial xVelocity is multiplied by SPEED_BOOST (1.1) 9 times
+			xVelocity *= SPEED_BOOST;
+		}
+		
+		// Increase yVelocity up to a limit
+		if (numBounces <= 5) { // Initial yVelocity is multiplied by SPEED_BOOST (1.1) 5 times
+			yVelocity *= SPEED_BOOST;
+		}
+	}
+	
+	
+	/**
+	 * The ballTouchingLeftWall method detects if the ball is touching the left wall of the field (i.e., the opponent's goal post)
+	 * 
+	 * @return true if ball is touching the left wall, false otherwise
+	 */
+	private boolean ballTouchingLeftWall() {
+		return (ball.getLayoutX() - ball.getRadius()) <= LEFT_WALL;
+	}
+	
+	
+	/**
+	 * The ballTouchingRightWall method detects if the ball is touching the right wall of the field (i.e., the player's goal post)
+	 * 
+	 * @return true if ball is touching the right wall, false otherwise
+	 */
+	private boolean ballTouchingRightWall() {
+		return (ball.getLayoutX() + ball.getRadius()) >= RIGHT_WALL;
+	}
+	
+	
+	/**
+	 * The addScore method increments a score tracker (whether it be the player's or opponent's) by 1
+	 * 
+	 * @param scoreTracker
+	 */
+	private void addScore(Text scoreTracker) {
+		scoreTracker.setText((Integer.parseInt(scoreTracker.getText()) + 1) + "");
 	}
 	
 	

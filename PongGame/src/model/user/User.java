@@ -1,4 +1,4 @@
-package model;
+package model.user;
 
 /**
  * User represents a user account, including username, password, all-time wins, and playtime.
