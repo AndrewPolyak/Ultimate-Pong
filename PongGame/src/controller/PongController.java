@@ -292,11 +292,10 @@ public class PongController {
 		if ((currentTime - lastBounceTime) > PADDLE_BOUNCE_COOLDOWN) { // If elapsed time since last bounce is longer than cooldown timer
 			xVelocity *= -1; // Bounce ball
 			
-			if (ballTouchingTopOfPaddle(paddle)) {
+			if (ballTouchingTopOfPaddle(paddle)) { // FIXME the direction-changing logic works inconsistently ... sometimes inappropriately changes direction
 				if (yVelocity > 0) { // If ball is moving downward, send it upward and slightly increase speed
 					yVelocity *= -1.1;
 				}
-				
 			} else if (ballTouchingBottomOfPaddle(paddle)) {
 				if (this.yVelocity < 0) { // If ball is moving upward, send it downward and slightly increase speed
 					this.yVelocity *= -1.1;

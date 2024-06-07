@@ -1,7 +1,10 @@
 package view;
 
 /**
- * TODO
+ * The GameViewMessages class contains the dynamic messages displayed during game execution
+ * 
+ * @author Andrew Polyak
+ * @version June 7, 2024
  */
 public class GameViewMessages {
 

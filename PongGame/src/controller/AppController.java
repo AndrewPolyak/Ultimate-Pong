@@ -61,7 +61,7 @@ public class AppController implements Initializable {
     private Text gameResultMsg;
 
     @FXML
-    private AnchorPane gameView;
+    private AnchorPane pongGameView;
 
     @FXML
     private Button hardModeBtn;
@@ -129,9 +129,23 @@ public class AppController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	PongController play = new PongController(gameView, ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg);
+    	
+    	boolean playPong = true; // placeholder
+    	
+    	if (playPong) {
+    		pongGameView.setVisible(true);
+    		runPong();
+    	}
+
+    }
+    
+    
+    private void runPong() {
+    	PongController play = new PongController(pongGameView, ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg);
     	play.startAnimation();
     }
+    
+    
     
     
     @FXML
