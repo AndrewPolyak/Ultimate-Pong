@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 public class AppController implements Initializable {
 
-    @FXML
+	@FXML
     private AnchorPane appLaunchPane;
 
     @FXML
@@ -25,13 +25,25 @@ public class AppController implements Initializable {
     private Button backToMenuBtn;
 
     @FXML
+    private Button backToStartScreenBtn1;
+
+    @FXML
+    private Button backToStartScreenBtn11;
+
+    @FXML
     private Circle ball;
 
     @FXML
     private AnchorPane creatAcctPane;
 
     @FXML
+    private AnchorPane creatAcctView1;
+
+    @FXML
     private Button createAcctBtn;
+
+    @FXML
+    private Button createAcctBtn1;
 
     @FXML
     private Button createAcctMenuBtn;
@@ -61,9 +73,6 @@ public class AppController implements Initializable {
     private Text gameResultMsg;
 
     @FXML
-    private AnchorPane pongGameView;
-
-    @FXML
     private Button hardModeBtn;
 
     @FXML
@@ -82,6 +91,9 @@ public class AppController implements Initializable {
     private Text logInValidationMsg1;
 
     @FXML
+    private Text logInValidationMsg11;
+
+    @FXML
     private AnchorPane logInView;
 
     @FXML
@@ -91,7 +103,13 @@ public class AppController implements Initializable {
     private TextField newPassword;
 
     @FXML
+    private TextField newPassword1;
+
+    @FXML
     private TextField newUsername;
+
+    @FXML
+    private TextField newUsername1;
 
     @FXML
     private Text numWinsMsg;
@@ -121,6 +139,9 @@ public class AppController implements Initializable {
     private Text plyScore;
 
     @FXML
+    private AnchorPane pongGameView;
+
+    @FXML
     private AnchorPane preGameView;
 
     @FXML
@@ -129,14 +150,22 @@ public class AppController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	appLaunchView.setVisible(true);
+    	logInView.setVisible(false);
+    	createAcctView.setVisible(false);
+    	preGameView.setVisible(false);
+    	pongGameView.setVisible(false);
     	
-    	boolean playPong = true; // placeholder
     	
-    	if (playPong) {
-    		pongGameView.setVisible(true);
-    		runPong();
-    	}
+    	StartScreenController login = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
 
+    	login.getStartScreenInput();
+    	
+    	//if (playPong) {
+    	//	pongGameView.setVisible(true);
+    	//	runPong();
+    	//}
+    		
     }
     
     
@@ -145,42 +174,4 @@ public class AppController implements Initializable {
     	play.startAnimation();
     }
     
-    
-    
-    
-    @FXML
-    void backToMenuBtnHandler(ActionEvent event) {
-
-    }
-
-    @FXML
-    void easyModeBtnHandler(ActionEvent event) {
-
-    }
-
-    @FXML
-    void hardModeBtnHandler(ActionEvent event) {
-
-    }
-
-    @FXML
-    void midModeBtnHandler(ActionEvent event) {
-
-    }
-
-    @FXML
-    void playAgainButtonHandler(ActionEvent event) {
-
-    }
-
-    @FXML
-    void playGameBtnHandler(ActionEvent event) {
-
-    }
-
-    @FXML
-    void plyForfeitHandler(ActionEvent event) {
-
-    }
-
 }

@@ -16,7 +16,7 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="pongGameView" prefHeight="651.0" prefWidth="1000.0" style="-fx-background-color: #343231;">
+            <AnchorPane fx:id="pongGameView" prefHeight="651.0" prefWidth="1000.0" style="-fx-background-color: #343231;" visible="false">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="500.0" layoutY="77.0" stroke="#ffffff00" strokeType="INSIDE" width="4.0" />
                   <Text fx:id="plyScore" fill="#b9ff94" layoutX="610.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="150.13671875">
@@ -44,7 +44,7 @@
                   </Text>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="4.0" layoutY="75.0" stroke="#ffffff00" strokeType="INSIDE" width="1000.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="4.0" layoutY="575.0" stroke="#ffffff00" strokeType="INSIDE" width="1000.0" />
-                  <Button fx:id="plyForfeit" layoutX="439.0" layoutY="590.0" mnemonicParsing="false" onAction="#plyForfeitHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Forfeit" textAlignment="CENTER">
+                  <Button fx:id="plyForfeit" layoutX="439.0" layoutY="590.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Forfeit" textAlignment="CENTER">
                      <font>
                         <Font name="Haettenschweiler" size="27.0" />
                      </font>
@@ -61,12 +61,12 @@
                               <Font name="Haettenschweiler" size="96.0" />
                            </font>
                         </Text>
-                        <Button fx:id="backToMenuBtn" layoutX="50.0" layoutY="122.0" mnemonicParsing="false" onAction="#backToMenuBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: BLACK;" text="Menu" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="backToMenuBtn" layoutX="50.0" layoutY="122.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: BLACK;" text="Menu" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Haettenschweiler" size="27.0" />
                            </font>
                         </Button>
-                        <Button fx:id="playAgainBtn" layoutX="219.0" layoutY="122.0" mnemonicParsing="false" onAction="#playAgainButtonHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: BLACK;" text="Play Again" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="playAgainBtn" layoutX="219.0" layoutY="122.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: BLACK;" text="Play Again" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Haettenschweiler" size="27.0" />
                            </font>
@@ -223,11 +223,16 @@
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>
                         </Text>
+                        <Button fx:id="backToStartScreenBtn1" layoutX="385.0" layoutY="11.0" mnemonicParsing="false" prefHeight="6.0" prefWidth="93.0" text="Go Back">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="logInView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="logInView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
                   <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
@@ -311,6 +316,50 @@
                         </Text>
                      </children>
                   </AnchorPane>
+                  <AnchorPane fx:id="creatAcctView1" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
+                     <children>
+                        <Button fx:id="createAcctBtn1" layoutX="125.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Login">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="20.0" />
+                           </font>
+                        </Button>
+                        <Text fill="#343231" layoutX="120.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter username &amp; password" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="newPassword1" layoutX="125.0" layoutY="359.0" prefHeight="40.0" prefWidth="240.0">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="newUsername1" layoutX="125.0" layoutY="278.0" prefHeight="40.0" prefWidth="240.0">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </TextField>
+                        <Text fill="#343231" layoutX="125.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#343231" layoutX="125.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="logInValidationMsg11" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="17.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="backToStartScreenBtn2" layoutX="385.0" layoutY="11.0" mnemonicParsing="false" prefHeight="6.0" prefWidth="93.0" text="Go Back">
+                           <font>
+                              <Font name="Cascadia Code Regular" size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="preGameView" prefHeight="651.0" prefWidth="1000.0" visible="false">
@@ -323,22 +372,22 @@
                   </Text>
                   <AnchorPane fx:id="gameConfigPane" layoutX="250.0" layoutY="278.0" prefHeight="300.0" prefWidth="500.0">
                      <children>
-                        <Button fx:id="playGameBtn" layoutX="185.0" layoutY="196.0" mnemonicParsing="false" onAction="#playGameBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Start" textAlignment="CENTER">
+                        <Button fx:id="playGameBtn" layoutX="185.0" layoutY="196.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Start" textAlignment="CENTER">
                            <font>
                               <Font name="Haettenschweiler" size="27.0" />
                            </font>
                         </Button>
-                        <Button fx:id="midModeBtn" layoutX="185.0" layoutY="103.0" mnemonicParsing="false" onAction="#midModeBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Medium" textAlignment="CENTER">
+                        <Button fx:id="midModeBtn" layoutX="185.0" layoutY="103.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Medium" textAlignment="CENTER">
                            <font>
                               <Font name="Haettenschweiler" size="27.0" />
                            </font>
                         </Button>
-                        <Button fx:id="hardModeBtn" layoutX="356.0" layoutY="103.0" mnemonicParsing="false" onAction="#hardModeBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Hard" textAlignment="CENTER">
+                        <Button fx:id="hardModeBtn" layoutX="356.0" layoutY="103.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Hard" textAlignment="CENTER">
                            <font>
                               <Font name="Haettenschweiler" size="27.0" />
                            </font>
                         </Button>
-                        <Button fx:id="easyModeBtn" layoutX="17.0" layoutY="105.0" mnemonicParsing="false" onAction="#easyModeBtnHandler" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Easy" textAlignment="CENTER">
+                        <Button fx:id="easyModeBtn" layoutX="17.0" layoutY="105.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Easy" textAlignment="CENTER">
                            <font>
                               <Font name="Haettenschweiler" size="27.0" />
                            </font>
