@@ -232,7 +232,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="logInView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0">
+            <AnchorPane fx:id="logInView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
                   <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
@@ -277,7 +277,7 @@
                   <Circle fill="#cfff04" layoutX="255.0" layoutY="354.0" radius="62.0" stroke="#cfff04" strokeType="INSIDE" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="136.0" layoutX="237.0" layoutY="412.0" stroke="#cfff04" strokeType="INSIDE" width="37.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="5.0" layoutX="67.0" layoutY="113.0" stroke="#cfff04" strokeType="INSIDE" width="115.0" />
-                  <AnchorPane fx:id="logInPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0" visible="false">
+                  <AnchorPane fx:id="logInPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
                      <children>
                         <Button fx:id="logInBtn" layoutX="125.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Login">
                            <font>
@@ -310,45 +310,6 @@
                            </font>
                         </Text>
                         <Text fx:id="logInValidationMsg" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="17.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="creatAcctView1" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
-                     <children>
-                        <Button fx:id="createAcctBtn1" layoutX="125.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Login">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="20.0" />
-                           </font>
-                        </Button>
-                        <Text fill="#343231" layoutX="120.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter username &amp; password" textAlignment="CENTER">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="17.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="newPassword1" layoutX="125.0" layoutY="359.0" prefHeight="40.0" prefWidth="240.0">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="17.0" />
-                           </font>
-                        </TextField>
-                        <TextField fx:id="newUsername1" layoutX="125.0" layoutY="278.0" prefHeight="40.0" prefWidth="240.0">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="17.0" />
-                           </font>
-                        </TextField>
-                        <Text fill="#343231" layoutX="125.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="17.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#343231" layoutX="125.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
-                           <font>
-                              <Font name="Cascadia Code Regular" size="17.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="logInValidationMsg11" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
                            <font>
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>

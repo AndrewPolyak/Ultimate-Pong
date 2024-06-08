@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -11,16 +12,43 @@ import javafx.scene.layout.AnchorPane;
  */
 public class LoginController {
 
-	
 	private Button backToStartScreenBtn;
 	private AnchorPane loginView;
 	private AnchorPane appLaunchView;
+	private TextField username;
+	private TextField password;
 	
-	public LoginController(Button backToStartScreenBtn, AnchorPane loginView, AnchorPane appLaunchView) {
-		
+	
+	/**
+	 * TODO
+	 * 
+	 * @param backToStartScreenBtn
+	 * @param loginView
+	 * @param appLaunchView
+	 * @param username
+	 * @param password
+	 */
+	public LoginController(Button backToStartScreenBtn, AnchorPane loginView, AnchorPane appLaunchView, TextField username, TextField password) {
+		this.backToStartScreenBtn = backToStartScreenBtn;
+		this.loginView = loginView;
+		this.appLaunchView = appLaunchView;
+		this.username = username;
+		this.password = password;
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void getLoginScreenInput() {
+		backToStartScreenBtnHandler();
 		
 	}
 	
+
+	/**
+	 * 
+	 */
 	private void backToStartScreenBtnHandler() {
 		backToStartScreenBtn.setOnMouseClicked(e -> {
 			loginView.setVisible(false);

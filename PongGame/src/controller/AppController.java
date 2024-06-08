@@ -28,7 +28,7 @@ public class AppController implements Initializable {
     private Button backToStartScreenBtn1;
 
     @FXML
-    private Button backToStartScreenBtn11;
+    private Button backToStartScreenBtn2;
 
     @FXML
     private Circle ball;
@@ -146,20 +146,29 @@ public class AppController implements Initializable {
 
     @FXML
     private Text welcomeMsg;
-
+    
+    StartScreenController startUpScreen;
+    
+    LoginController loginScreen;
+    RegisterController registerScreen;
+    
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
+    	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, existingUsername, existingPassword);
+        registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView);
+    	
     	appLaunchView.setVisible(true);
     	logInView.setVisible(false);
     	createAcctView.setVisible(false);
     	preGameView.setVisible(false);
     	pongGameView.setVisible(false);
     	
+    	startUpScreen.getStartScreenInput();
+		loginScreen.getLoginScreenInput();
+		registerScreen.getRegisterScreenInput();
     	
-    	StartScreenController login = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
-
-    	login.getStartScreenInput();
     	
     	//if (playPong) {
     	//	pongGameView.setVisible(true);

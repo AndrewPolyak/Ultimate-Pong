@@ -14,17 +14,25 @@ public class RegisterController {
 	
 	
 	private Button backToStartScreenBtn;
-	private AnchorPane loginView;
+	private AnchorPane registerView;
 	private AnchorPane appLaunchView;
 	
-	public RegisterController(Button backToStartScreenBtn, AnchorPane loginView, AnchorPane appLaunchView) {
-		
+	public RegisterController(Button backToStartScreenBtn, AnchorPane registerView, AnchorPane appLaunchView) {
+		this.backToStartScreenBtn = backToStartScreenBtn;
+		this.registerView = registerView;
+		this.appLaunchView = appLaunchView;
 		
 	}
 	
+	
+	public void getRegisterScreenInput() {
+		backToStartScreenBtnHandler();
+	}
+	
+	
 	private void backToStartScreenBtnHandler() {
 		backToStartScreenBtn.setOnMouseClicked(e -> {
-			loginView.setVisible(false);
+			registerView.setVisible(false);
 			appLaunchView.setVisible(true);
 		});
 	}
