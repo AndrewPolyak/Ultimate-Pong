@@ -30,6 +30,8 @@ public class LoginController {
 	
 	private ArrayList<User> users; // Represents the database of user credentials
 	
+	private boolean loggedIn;
+	
 	
 	/**
 	 * The LoginController constructor initiates all pane objects for the loginView page
@@ -97,6 +99,7 @@ public class LoginController {
 	private void validateCredentials() {
 		for (User user : users) {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) { // If the credentials match a database item
+				loggedIn = true;
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
@@ -104,6 +107,30 @@ public class LoginController {
 				validationMsg.setVisible(true);
 			}
 		}
+	}
+
+	
+	/**
+	 * @return whether the user is logged in (true) or not (false)
+	 */
+	public boolean loggedIn() {
+		return loggedIn;
+	}
+	
+	
+	/**
+	 * @return username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+
+	/**
+	 * @return password
+	 */
+	public String getPassword() {
+		return password;
 	}
 	
 }
