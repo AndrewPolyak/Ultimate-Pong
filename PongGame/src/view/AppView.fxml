@@ -309,7 +309,7 @@
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="logInValidationMsg" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
+                        <Text fx:id="logInValidationMsg" fill="#f73737" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect credentials." textAlignment="CENTER" visible="false" wrappingWidth="350.0234375">
                            <font>
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>

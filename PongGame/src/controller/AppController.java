@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import model.User;
 
 public class AppController implements Initializable {
 
@@ -153,10 +155,17 @@ public class AppController implements Initializable {
     RegisterController registerScreen;
     
     
+    ArrayList<User> users = new ArrayList<>();
+    User a = new User("a", "b", 0);
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	users.add(a); // temporary
+    	
+    	
     	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
-    	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, existingUsername, existingPassword);
+    	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, preGameView, existingUsername, existingPassword, logInBtn, users, logInValidationMsg);
         registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView);
     	
     	appLaunchView.setVisible(true);
