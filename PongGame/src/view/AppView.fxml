@@ -141,7 +141,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="createAcctView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="createAcctView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
                   <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
@@ -218,7 +218,7 @@
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="logInValidationMsg1" fill="#343231" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VALIDATION PLACEHOLDER" textAlignment="CENTER" wrappingWidth="350.0234375">
+                        <Text fx:id="createAcctValidationMsg" fill="#f73737" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name must be between 3 &amp; 25 chars" textAlignment="CENTER" visible="false" wrappingWidth="350.0234375">
                            <font>
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>

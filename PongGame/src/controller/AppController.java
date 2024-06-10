@@ -89,7 +89,7 @@ public class AppController implements Initializable {
     private Text logInValidationMsg;
 
     @FXML
-    private Text logInValidationMsg1;
+    private Text createAcctValidationMsg;
 
     @FXML
     private Text logInValidationMsg11;
@@ -165,7 +165,7 @@ public class AppController implements Initializable {
     	
     	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
     	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, preGameView, existingUsername, existingPassword, logInBtn, users, logInValidationMsg);
-        registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView);
+        registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView, preGameView, newUsername, newPassword, createAcctBtn, users, createAcctValidationMsg);
     	
     	appLaunchView.setVisible(true);
     	logInView.setVisible(false);
@@ -174,8 +174,11 @@ public class AppController implements Initializable {
     	pongGameView.setVisible(false);
     	
     	startUpScreen.getStartScreenInput();
-		loginScreen.getLoginScreenInput();
-		registerScreen.getRegisterScreenInput();
+		
+    	loginScreen.getLoginScreenInput();
+		
+    	registerScreen.getRegisterScreenInput();
+    	users = registerScreen.getUsers();
     	
     	
     	//if (playPong) {

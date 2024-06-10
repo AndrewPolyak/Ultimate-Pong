@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import model.User;
 
 /**
- * LoginController handles user interactions during the login process, including user authentication and account creation.
+ * LoginController handles user interactions during the login process
  * 
  * @author Andrew Polyak
  * @version June 9, 2024
@@ -100,6 +100,7 @@ public class LoginController {
 		for (User user : users) {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) { // If the credentials match a database item
 				loggedIn = true;
+				
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
@@ -123,14 +124,6 @@ public class LoginController {
 	 */
 	public String getUsername() {
 		return username;
-	}
-
-
-	/**
-	 * @return password
-	 */
-	public String getPassword() {
-		return password;
 	}
 	
 }
