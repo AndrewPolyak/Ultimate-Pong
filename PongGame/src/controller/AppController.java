@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -155,16 +156,30 @@ public class AppController implements Initializable {
     	registerScreen.getRegisterScreenInput();
     	users = registerScreen.getUsers();
     	
-    	// FIXME this does not work
-    	if (loginScreen.loggedIn()) {
-        	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, loginScreen.getUsername(), loginScreen.getNumPongWins());
-        } else if (registerScreen.loggedIn()) {
-        	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, registerScreen.getUsername(), registerScreen.getNumPongWins());
-        }
     	
+    	// Set listeners for login and registration success
+        loginScreen.setOnLoginSuccess(() -> onUserLoggedIn(loginScreen.getUsername(), loginScreen.getNumPongWins()));
+        registerScreen.setOnRegisterSuccess(() -> onUserRegistered(registerScreen.getUsername(), registerScreen.getNumPongWins()));
+    	
+    	
+    }
+    
+    
+    
+    private void onUserLoggedIn(String username, String numPongWins) {
+    	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, username, numPongWins);
     	preGameScreen.getPreGameScreenInput();
     	
-    	// FIXME this does not work
+    	if (preGameScreen.pongGameStarted()) {
+    		runPong();
+    	}
+    }
+    
+    
+    private void onUserRegistered(String username, String numPongWins) {
+    	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, username, numPongWins);
+    	preGameScreen.getPreGameScreenInput();
+    	
     	if (preGameScreen.pongGameStarted()) {
     		runPong();
     	}

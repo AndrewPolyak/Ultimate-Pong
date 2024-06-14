@@ -37,7 +37,8 @@ public class RegisterController {
 	private int USERNAME_MIN_CHARS = 3; // The minimum character count of the username is 3
 	private int USERNAME_MAX_CHARS = 25; // The maximum character count of the username is 25
 	
-	private boolean loggedIn;
+	private boolean loggedIn = false;
+	private Runnable onRegisterSuccess;
 	
 	
 	/**
@@ -104,6 +105,10 @@ public class RegisterController {
 				
 				loggedIn = true;
 				
+				if (onRegisterSuccess != null) {
+					onRegisterSuccess.run();
+				}
+				
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
@@ -158,6 +163,11 @@ public class RegisterController {
 	 */
 	public String getNumPongWins() {
 		return 0 + "";
+	}
+	
+	
+	public void setOnRegisterSuccess(Runnable onRegisterSuccess) {
+		this.onRegisterSuccess = onRegisterSuccess;
 	}
 	
 }

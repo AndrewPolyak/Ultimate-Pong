@@ -15,6 +15,8 @@ public class PreGameController {
 	private AnchorPane appLaunchView;
 	private AnchorPane preGameView;
 	private AnchorPane pongGameView;
+	private AnchorPane loginView;
+	private AnchorPane createAcctView;
 	private Button menuBtn;
 	private Button startBtn;
 	private Text welcomeMsg;
@@ -25,10 +27,12 @@ public class PreGameController {
 	private boolean pongGameStarted;
 
 
-	public PreGameController(AnchorPane appLaunchView, AnchorPane preGameView, AnchorPane pongGameView, Button menuBtn, Button startBtn, Text welcomeMsg, Text numWinsMsg, String username, String numWins) {
+	public PreGameController(AnchorPane appLaunchView, AnchorPane preGameView, AnchorPane pongGameView, AnchorPane loginView, AnchorPane createAcctView, Button menuBtn, Button startBtn, Text welcomeMsg, Text numWinsMsg, String username, String numWins) {
 		this.appLaunchView = appLaunchView;
 		this.preGameView = preGameView;
 		this.pongGameView = pongGameView;
+		this.loginView = loginView;
+		this.createAcctView = createAcctView;
 		this.menuBtn = menuBtn;
 		this.startBtn = startBtn;
 		this.welcomeMsg = welcomeMsg;
@@ -60,6 +64,8 @@ public class PreGameController {
 	private void backToStartScreenBtnHandler() {
 		menuBtn.setOnMouseClicked(e -> {
 			preGameView.setVisible(false);
+			loginView.setVisible(false);
+			createAcctView.setVisible(false);
 			appLaunchView.setVisible(true); // Open launcher screen
 		});
 	}
@@ -72,6 +78,8 @@ public class PreGameController {
 		startBtn.setOnMouseClicked(e -> {
 			pongGameStarted = true;
 			
+			loginView.setVisible(false);
+			createAcctView.setVisible(false);
 			preGameView.setVisible(false);
 			pongGameView.setVisible(true); // Open Pong game
 		});

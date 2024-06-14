@@ -31,7 +31,8 @@ public class LoginController {
 	
 	private ArrayList<User> users; // Represents the database of user credentials
 	
-	private boolean loggedIn;
+	private boolean loggedIn = false;
+	private Runnable onLoginSuccess;
 	
 	
 	/**
@@ -107,6 +108,12 @@ public class LoginController {
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
+				
+				if (onLoginSuccess != null) {
+					onLoginSuccess.run();
+				}
+				
+				return;
 			} else {
 				validationMsg.setVisible(true);
 			}
@@ -135,6 +142,11 @@ public class LoginController {
 	 */
 	public String getNumPongWins() {
 		return numPongWins;
+	}
+	
+	
+	public void setOnLoginSuccess(Runnable onLoginSuccess) {
+		this.onLoginSuccess = onLoginSuccess;
 	}
 	
 }
