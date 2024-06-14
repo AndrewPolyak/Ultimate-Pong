@@ -141,7 +141,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="createAcctView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0">
+            <AnchorPane fx:id="createAcctView" layoutY="1.0" prefHeight="650.0" prefWidth="1000.0" visible="false">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="640.0" layoutX="6.0" layoutY="4.0" stroke="#343231" strokeType="INSIDE" width="479.0" />
                   <Text fill="#cfff04" layoutX="65.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pong Ultimate" textAlignment="CENTER">
@@ -309,7 +309,7 @@
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="logInValidationMsg" fill="#f73737" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect credentials." textAlignment="CENTER" visible="false" wrappingWidth="350.0234375">
+                        <Text fx:id="logInValidationMsg" fill="#f73737" layoutX="70.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect credentials" textAlignment="CENTER" visible="false" wrappingWidth="350.0234375">
                            <font>
                               <Font name="Cascadia Code Regular" size="17.0" />
                            </font>
@@ -323,44 +323,15 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="preGameView" prefHeight="651.0" prefWidth="1000.0" visible="false">
+            <AnchorPane fx:id="preGameView" prefHeight="651.0" prefWidth="1000.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343231" height="657.0" layoutY="-6.0" stroke="#343231" strokeType="INSIDE" width="1000.0" />
-                  <Text fx:id="welcomeMsg" fill="#b9ff94" layoutX="200.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME BACK PLACEHOLDER" textAlignment="CENTER" wrappingWidth="600.13671875">
+                  <Text fx:id="welcomeMsg" fill="#b9ff94" layoutX="200.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME BACK PLACEHOLDER" textAlignment="CENTER" wrappingWidth="600.13671875">
                      <font>
                         <Font name="Haettenschweiler" size="40.0" />
                      </font>
                   </Text>
-                  <AnchorPane fx:id="gameConfigPane" layoutX="250.0" layoutY="278.0" prefHeight="300.0" prefWidth="500.0">
-                     <children>
-                        <Button fx:id="playGameBtn" layoutX="185.0" layoutY="196.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Start" textAlignment="CENTER">
-                           <font>
-                              <Font name="Haettenschweiler" size="27.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="midModeBtn" layoutX="185.0" layoutY="103.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Medium" textAlignment="CENTER">
-                           <font>
-                              <Font name="Haettenschweiler" size="27.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="hardModeBtn" layoutX="356.0" layoutY="103.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Hard" textAlignment="CENTER">
-                           <font>
-                              <Font name="Haettenschweiler" size="27.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="easyModeBtn" layoutX="17.0" layoutY="105.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Easy" textAlignment="CENTER">
-                           <font>
-                              <Font name="Haettenschweiler" size="27.0" />
-                           </font>
-                        </Button>
-                        <Text fill="WHITE" layoutX="75.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select difficulty" textAlignment="CENTER" wrappingWidth="350.13671875">
-                           <font>
-                              <Font name="Haettenschweiler" size="30.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="300.0" layoutY="140.0" prefHeight="100.0" prefWidth="400.0">
+                  <AnchorPane layoutX="300.0" layoutY="153.0" prefHeight="100.0" prefWidth="400.0">
                      <children>
                         <Text fx:id="numWinsMsg" fill="#ff9292" layoutX="65.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WINS PLACEHOLDER" textAlignment="CENTER" wrappingWidth="269.13671875">
                            <font>
@@ -369,6 +340,16 @@
                         </Text>
                      </children>
                   </AnchorPane>
+                  <Button fx:id="playGameBtn" layoutX="520.0" layoutY="417.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Start" textAlignment="CENTER">
+                     <font>
+                        <Font name="Haettenschweiler" size="27.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="PreGameMenuBtn" layoutX="350.0" layoutY="417.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white;" text="Menu" textAlignment="CENTER">
+                     <font>
+                        <Font name="Haettenschweiler" size="27.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

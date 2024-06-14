@@ -17,6 +17,9 @@ import model.User;
 public class AppController implements Initializable {
 
 	@FXML
+    private Button PreGameMenuBtn;
+
+    @FXML
     private AnchorPane appLaunchPane;
 
     @FXML
@@ -38,31 +41,22 @@ public class AppController implements Initializable {
     private AnchorPane creatAcctPane;
 
     @FXML
-    private AnchorPane creatAcctView1;
-
-    @FXML
     private Button createAcctBtn;
-
-    @FXML
-    private Button createAcctBtn1;
 
     @FXML
     private Button createAcctMenuBtn;
 
     @FXML
-    private AnchorPane createAcctView;
+    private Text createAcctValidationMsg;
 
     @FXML
-    private Button easyModeBtn;
+    private AnchorPane createAcctView;
 
     @FXML
     private TextField existingPassword;
 
     @FXML
     private TextField existingUsername;
-
-    @FXML
-    private AnchorPane gameConfigPane;
 
     @FXML
     private AnchorPane gameEndPane;
@@ -72,9 +66,6 @@ public class AppController implements Initializable {
 
     @FXML
     private Text gameResultMsg;
-
-    @FXML
-    private Button hardModeBtn;
 
     @FXML
     private Button logInBtn;
@@ -89,28 +80,13 @@ public class AppController implements Initializable {
     private Text logInValidationMsg;
 
     @FXML
-    private Text createAcctValidationMsg;
-
-    @FXML
-    private Text logInValidationMsg11;
-
-    @FXML
     private AnchorPane logInView;
-
-    @FXML
-    private Button midModeBtn;
 
     @FXML
     private TextField newPassword;
 
     @FXML
-    private TextField newPassword1;
-
-    @FXML
     private TextField newUsername;
-
-    @FXML
-    private TextField newUsername1;
 
     @FXML
     private Text numWinsMsg;
