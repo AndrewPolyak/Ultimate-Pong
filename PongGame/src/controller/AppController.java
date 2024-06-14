@@ -124,10 +124,10 @@ public class AppController implements Initializable {
     @FXML
     private Text welcomeMsg;
     
-    StartScreenController startUpScreen;
-    
-    LoginController loginScreen;
-    RegisterController registerScreen;
+    private StartScreenController startUpScreen; 
+    private LoginController loginScreen;
+    private RegisterController registerScreen;
+    private PreGameController preGameScreen;
     
     
     ArrayList<User> users = new ArrayList<>();
@@ -138,16 +138,15 @@ public class AppController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     	users.add(a); // temporary
     	
-    	
-    	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
-    	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, preGameView, existingUsername, existingPassword, logInBtn, users, logInValidationMsg);
-        registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView, preGameView, newUsername, newPassword, createAcctBtn, users, createAcctValidationMsg);
-    	
     	appLaunchView.setVisible(true);
     	logInView.setVisible(false);
     	createAcctView.setVisible(false);
     	preGameView.setVisible(false);
     	pongGameView.setVisible(false);
+    	
+    	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
+    	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, preGameView, existingUsername, existingPassword, logInBtn, users, logInValidationMsg);
+        registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView, preGameView, newUsername, newPassword, createAcctBtn, users, createAcctValidationMsg);
     	
     	startUpScreen.getStartScreenInput();
 		
@@ -156,13 +155,21 @@ public class AppController implements Initializable {
     	registerScreen.getRegisterScreenInput();
     	users = registerScreen.getUsers();
     	
+    	// FIXME this does not work
+    	if (loginScreen.loggedIn()) {
+        	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, loginScreen.getUsername(), loginScreen.getNumPongWins());
+        } else if (registerScreen.loggedIn()) {
+        	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, registerScreen.getUsername(), registerScreen.getNumPongWins());
+        }
     	
-    	//if (playPong) {
-    	//	pongGameView.setVisible(true);
-    	//	runPong();
-    	//}
-    		
+    	preGameScreen.getPreGameScreenInput();
+    	
+    	// FIXME this does not work
+    	if (preGameScreen.pongGameStarted()) {
+    		runPong();
+    	}
     }
+    
     
     
     private void runPong() {

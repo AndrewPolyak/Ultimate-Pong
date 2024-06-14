@@ -23,10 +23,11 @@ public class LoginController {
 	private TextField usernameField; // Text field containing the username input
 	private TextField passwordField; // Text field containing the password input // TODO find out how to hide characters
 	private Button loginBtn; // Button to submit user credentials to go to pre-game page
-	Text validationMsg; // A message that appears if the user credentials don't match any in the records
+	private Text validationMsg; // A message that appears if the user credentials don't match any in the records
 	
 	private String username = "";
 	private String password = "";
+	private String numPongWins;
 	
 	private ArrayList<User> users; // Represents the database of user credentials
 	
@@ -101,6 +102,8 @@ public class LoginController {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) { // If the credentials match a database item
 				loggedIn = true;
 				
+				numPongWins = user.getNumPongWins() + "";
+				
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
@@ -124,6 +127,14 @@ public class LoginController {
 	 */
 	public String getUsername() {
 		return username;
+	}
+	
+	
+	/**
+	 * @return TODO
+	 */
+	public String getNumPongWins() {
+		return numPongWins;
 	}
 	
 }

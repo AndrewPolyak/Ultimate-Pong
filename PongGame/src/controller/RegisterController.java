@@ -152,4 +152,12 @@ public class RegisterController {
 		return username;
 	}
 	
+	
+	/**
+	 * @return TODO
+	 */
+	public String getNumPongWins() {
+		return 0 + "";
+	}
+	
 }
