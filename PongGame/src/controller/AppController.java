@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -129,6 +128,8 @@ public class AppController implements Initializable {
     private LoginController loginScreen;
     private RegisterController registerScreen;
     private PreGameController preGameScreen;
+    private PongGameController playPong;
+    private PongMenuController navPong;
     
     
     ArrayList<User> users = new ArrayList<>();
@@ -139,40 +140,54 @@ public class AppController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     	users.add(a); // temporary
     	
+    	setAppLaunchView();
+    	
+    	setMainMenuControllers();
+    	
+    	getMainMenuInput();
+    	
+    	getLoginSuccess();
+    }
+
+    
+    private void setAppLaunchView() {
     	appLaunchView.setVisible(true);
     	logInView.setVisible(false);
     	createAcctView.setVisible(false);
     	preGameView.setVisible(false);
     	pongGameView.setVisible(false);
-    	
+    }
+    
+    
+    private void setMainMenuControllers() {
     	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
     	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, preGameView, existingUsername, existingPassword, logInBtn, users, logInValidationMsg);
         registerScreen = new RegisterController(backToStartScreenBtn1, createAcctView, appLaunchView, preGameView, newUsername, newPassword, createAcctBtn, users, createAcctValidationMsg);
-    	
+    }
+    
+    
+    private void getMainMenuInput() {
     	startUpScreen.getStartScreenInput();
 		
     	loginScreen.getLoginScreenInput();
 		
     	registerScreen.getRegisterScreenInput();
     	users = registerScreen.getUsers();
-    	
-    	
+    }
+    
+    
+    private void getLoginSuccess() {
     	// Set listeners for login and registration success
         loginScreen.setOnLoginSuccess(() -> onUserLoggedIn(loginScreen.getUsername(), loginScreen.getNumPongWins()));
         registerScreen.setOnRegisterSuccess(() -> onUserRegistered(registerScreen.getUsername(), registerScreen.getNumPongWins()));
-    	
-    	
     }
-    
     
     
     private void onUserLoggedIn(String username, String numPongWins) {
     	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, username, numPongWins);
     	preGameScreen.getPreGameScreenInput();
     	
-    	if (preGameScreen.pongGameStarted()) {
-    		runPong();
-    	}
+    	preGameScreen.setOnGameStart(() -> runPong(username));
     }
     
     
@@ -180,16 +195,18 @@ public class AppController implements Initializable {
     	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, username, numPongWins);
     	preGameScreen.getPreGameScreenInput();
     	
-    	if (preGameScreen.pongGameStarted()) {
-    		runPong();
-    	}
+    	preGameScreen.setOnGameStart(() -> runPong(username));
     }
     
     
-    
-    private void runPong() {
-    	PongController play = new PongController(pongGameView, ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg);
-    	play.startAnimation();
+    private void runPong(String username) {
+    	playPong = new PongGameController(pongGameView, ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg, plyName, username, plyForfeit);
+    	navPong = new PongMenuController(pongGameView, preGameView, plyForfeit, backToMenuBtn, playAgainBtn, playPong, preGameScreen);
+    	
+    	navPong.getNavPongInput();
+    	playPong.startGame();
+    	
+    	navPong.setOnPlayAgain(() -> runPong(username));
     }
     
 }

@@ -12,7 +12,7 @@ import model.User;
  * LoginController handles user interactions during the account creation process
  * 
  * @author Andrew Polyak
- * @version June 9, 2024
+ * @version TODO
  */
 public class RegisterController {
 
@@ -37,8 +37,7 @@ public class RegisterController {
 	private int USERNAME_MIN_CHARS = 3; // The minimum character count of the username is 3
 	private int USERNAME_MAX_CHARS = 25; // The maximum character count of the username is 25
 	
-	private boolean loggedIn = false;
-	private Runnable onRegisterSuccess;
+	private Runnable onRegisterSuccess; // TODO
 	
 	
 	/**
@@ -103,8 +102,6 @@ public class RegisterController {
 				newUser = new User(username, password, NEW_USER_NUM_WINS);
 				users.add(newUser);
 				
-				loggedIn = true;
-				
 				if (onRegisterSuccess != null) {
 					onRegisterSuccess.run();
 				}
@@ -113,7 +110,7 @@ public class RegisterController {
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
 			} else {
-				validationMsg.setVisible(true);
+				validationMsg.setVisible(true); // Inform user that the entered username is invalid
 			}
 		});
 	}
@@ -131,14 +128,6 @@ public class RegisterController {
 		} else {
 			return false;
 		}
-	}
-	
-	
-	/**
-	 * @return whether the user is logged in (true) or not (false)
-	 */
-	public boolean loggedIn() {
-		return loggedIn;
 	}
 	
 	
@@ -166,6 +155,11 @@ public class RegisterController {
 	}
 	
 	
+	/**
+	 * TODO
+	 * 
+	 * @param onRegisterSuccess
+	 */
 	public void setOnRegisterSuccess(Runnable onRegisterSuccess) {
 		this.onRegisterSuccess = onRegisterSuccess;
 	}

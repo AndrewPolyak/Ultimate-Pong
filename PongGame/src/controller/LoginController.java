@@ -12,7 +12,7 @@ import model.User;
  * LoginController handles user interactions during the login process
  * 
  * @author Andrew Polyak
- * @version June 9, 2024
+ * @version TODO
  */
 public class LoginController {
 
@@ -31,7 +31,6 @@ public class LoginController {
 	
 	private ArrayList<User> users; // Represents the database of user credentials
 	
-	private boolean loggedIn = false;
 	private Runnable onLoginSuccess;
 	
 	
@@ -101,9 +100,7 @@ public class LoginController {
 	private void validateCredentials() {
 		for (User user : users) {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) { // If the credentials match a database item
-				loggedIn = true;
-				
-				numPongWins = user.getNumPongWins() + "";
+				numPongWins = user.getNumPongWins() + ""; // Retrieve the number of pong wins from the user
 				
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
@@ -115,17 +112,9 @@ public class LoginController {
 				
 				return;
 			} else {
-				validationMsg.setVisible(true);
+				validationMsg.setVisible(true); // Inform user that the entered credentials don't match an account
 			}
 		}
-	}
-
-	
-	/**
-	 * @return whether the user is logged in (true) or not (false)
-	 */
-	public boolean loggedIn() {
-		return loggedIn;
 	}
 	
 	
@@ -136,7 +125,6 @@ public class LoginController {
 		return username;
 	}
 	
-	
 	/**
 	 * @return TODO
 	 */
@@ -145,6 +133,11 @@ public class LoginController {
 	}
 	
 	
+	/**
+	 * TODO
+	 * 
+	 * @param onLoginSuccess
+	 */
 	public void setOnLoginSuccess(Runnable onLoginSuccess) {
 		this.onLoginSuccess = onLoginSuccess;
 	}

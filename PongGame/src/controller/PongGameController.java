@@ -3,6 +3,7 @@ package controller;
 import java.security.SecureRandom;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -13,9 +14,9 @@ import view.GameViewMessages;
  * The PongController class contains the main logic for controlling the pong gameplay
  * 
  * @author Andrew Polyak
- * @version June 7, 2024
+ * @version June 14, 2024
  */
-public class PongController {
+public class PongGameController {
 
 	private AnchorPane gameView; // Represents the entire window
 	private Circle ball; // Represents the ball
@@ -27,8 +28,12 @@ public class PongController {
 	private SecureRandom random; // Represents the SecureRandom instance
 	private AnchorPane gameEndPane; // Represents the game-end message
 	private Text gameResultMsg; // Represents the message within gameEndPane indicating the game winner
+	private Text plyName;
+	private Button forfeitBtn;
 	
 	private GameViewMessages message; // Contains dynamic game messages
+	
+	private String username; // Represents the player's username
 	
 	// Define the boundaries of the playing field
 	private final int TOP_WALL = 79; // Y positon of the top wall
@@ -67,9 +72,11 @@ public class PongController {
 	private final long PADDLE_BOUNCE_COOLDOWN = 600; // In milliseconds ... The ball can only bounce off a paddle once every 600 milliseconds
 	private long lastBounceTime; // Stores the millisecond value since the ball was last bounced
 	
-	private final int WINNING_SCORE = 10; // Defines the score a player must reach to win the game
+	private final int WINNING_SCORE = 1; // Defines the score a player must reach to win the game // FIXME
 	
 	private final double OPP_PADDLE_VELOCITY = 6.4; // Controls the vertical speed of the opponent's paddle
+	
+	private boolean plyWon = false;
 	
 	
 	/**
@@ -85,9 +92,10 @@ public class PongController {
 	 * @param gameEndPane
 	 * @param gameResultMsg
 	 */
-	public PongController(AnchorPane gameView, Circle ball, Rectangle plyPaddle, Rectangle oppPaddle, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg) {
+	public PongGameController(AnchorPane gameView, Circle ball, Rectangle plyPaddle, Rectangle oppPaddle, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg, Text plyName, String username, Button forfeitBtn) {
 		this.random = new SecureRandom();
 		this.message = new GameViewMessages();
+		this.username = username;
 		this.ball = ball;
 		this.plyPaddle = plyPaddle;
 		this.oppPaddle = oppPaddle;
@@ -96,6 +104,8 @@ public class PongController {
 		this.gameEndPane = gameEndPane;
 		this.gameResultMsg = gameResultMsg;
 		this.gameView = gameView;
+		this.plyName = plyName;
+		this.forfeitBtn = forfeitBtn;
 		this.directionRight = random.nextBoolean();
 		this.directionUp = random.nextBoolean();
 		this.gameOn = true;
@@ -103,9 +113,25 @@ public class PongController {
 	
 	
 	/**
-	 * The startAnimation method instantiates an AnimationTimer to begin the "frames" of the game
+	 * The startGame method instantiates an AnimationTimer to begin the "frames" of the game
 	 */
-	public void startAnimation() {
+	public void startGame() {
+		plyName.setText(username);
+		
+		// Make game assets visible
+		ball.setVisible(true);
+		oppPaddle.setVisible(true);
+		plyPaddle.setVisible(true);
+		
+		// Make game results and menu options invisible
+		gameEndPane.setVisible(false);
+		
+		plyScore.setText("0");
+		oppScore.setText("0");
+		
+		ball.setLayoutX(BALL_X_SPAWN_START);
+		ball.setLayoutY(BALL_Y_SPAWN_START);
+		
 		animate = new AnimationTimer() {
 			
 			
@@ -124,6 +150,11 @@ public class PongController {
 			}
 		};
 		animate.start(); // Begin game
+	}
+	
+	
+	public void stopGame() {
+		animate.stop();
 	}
 	
 	
@@ -243,9 +274,10 @@ public class PongController {
 	 */
 	private void checkForGameEnd() {
 		if (Integer.parseInt(plyScore.getText()) == WINNING_SCORE) { // If player won
-			displayResults(true);
+			plyWon = true;
+			displayResults();
 		} else if (Integer.parseInt(oppScore.getText()) == WINNING_SCORE) { // If opponent won
-			displayResults(false);
+			displayResults();
 		}
 	}
 	
@@ -255,7 +287,7 @@ public class PongController {
 	 * 
 	 * @param plyWon
 	 */
-	private void displayResults(boolean plyWon) {
+	private void displayResults() {
 		gameOn = false; // End game
 		
 		// Stop ball
@@ -267,6 +299,7 @@ public class PongController {
 		ball.setVisible(false);
 		oppPaddle.setVisible(false);
 		plyPaddle.setVisible(false);
+		forfeitBtn.setVisible(false);
 		
 		// Display game results and menu options
 		gameEndPane.setVisible(true);
@@ -516,4 +549,9 @@ public class PongController {
 						this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth()); // And if the ball is within the right side of the paddle
 	}
 
+
+	public boolean getPlyWon() {
+		return plyWon;
+	}
+	
 }

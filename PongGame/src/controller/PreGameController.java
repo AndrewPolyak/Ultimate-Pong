@@ -25,6 +25,7 @@ public class PreGameController {
 	private String numWins;
 	
 	private boolean pongGameStarted;
+	private Runnable onGameStart;
 
 
 	public PreGameController(AnchorPane appLaunchView, AnchorPane preGameView, AnchorPane pongGameView, AnchorPane loginView, AnchorPane createAcctView, Button menuBtn, Button startBtn, Text welcomeMsg, Text numWinsMsg, String username, String numWins) {
@@ -78,6 +79,10 @@ public class PreGameController {
 		startBtn.setOnMouseClicked(e -> {
 			pongGameStarted = true;
 			
+			if (onGameStart != null) {
+				onGameStart.run();
+			}
+			
 			loginView.setVisible(false);
 			createAcctView.setVisible(false);
 			preGameView.setVisible(false);
@@ -91,6 +96,22 @@ public class PreGameController {
 	 */
 	public boolean pongGameStarted() {
 		return pongGameStarted;
+	}
+	
+	
+	/**
+	 * TODO
+	 * 
+	 * @param onGameStart
+	 */
+	public void setOnGameStart(Runnable onGameStart) {
+		this.onGameStart = onGameStart;
+	}
+	
+	
+	public void updateWinCount() { // TODO update users ArrayList with the updated win count
+		numWins = Integer.parseInt(numWins) + 1 + "";
+		setMessages();
 	}
 	
 }
