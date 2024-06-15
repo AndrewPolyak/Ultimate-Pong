@@ -37,7 +37,9 @@ public class PongMenuController {
 	}
 	
 	
-	
+	/**
+	 * TODO
+	 */
 	public void getNavPongInput() {
 		backToPreGameScreenBtnHandler();
 		playAgainBtnHander();
@@ -51,7 +53,8 @@ public class PongMenuController {
 		plyForfeitBtn.setOnMouseClicked(e -> {
 			game.stopGame(); // End the game
 			
-			preGameScreen.updateWinCount();
+			preGameScreen.updateWinCount(); // FIXME the game only counts the win if the user exists the game following the win. Need to count it even if they choose to play again
+			// FIXME losses sometimes seem to count for wins??
 			
 			
 			pongGameView.setVisible(false);
@@ -70,9 +73,10 @@ public class PongMenuController {
 		});
 	}
 	
-	// TODO create a PongGameController copy constructor
 	
-	
+	/**
+	 * TODO
+	 */
 	private void playAgainBtnHander() {
 		playAgainBtn.setOnMouseClicked(e -> {
 			if (onPlayAgain != null) {
@@ -82,16 +86,23 @@ public class PongMenuController {
 	}
 	
 	
+	/**
+	 * TODO
+	 * 
+	 * @param onPlayAgain
+	 */
 	public void setOnPlayAgain(Runnable onPlayAgain) {
 		this.onPlayAgain = onPlayAgain;
 	}
 	
 	
+	/**
+	 * TODO
+	 * 
+	 * @param onBackToMenu
+	 */
 	public void setOnBackToMenu(Runnable onBackToMenu) {
 		this.onBackToMenu = onBackToMenu;
 	}
-	
-	
-	
-	
+
 }

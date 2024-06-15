@@ -140,19 +140,12 @@ public class RegisterController {
 	
 	
 	/**
-	 * @return username
+	 * @return 
 	 */
-	public String getUsername() {
-		return username;
+	public User getNewUser() {
+		return newUser;
 	}
 	
-	
-	/**
-	 * @return TODO
-	 */
-	public String getNumPongWins() {
-		return 0 + "";
-	}
 	
 	
 	/**

@@ -27,9 +27,9 @@ public class LoginController {
 	
 	private String username = "";
 	private String password = "";
-	private String numPongWins;
 	
 	private ArrayList<User> users; // Represents the database of user credentials
+	private User user;
 	
 	private Runnable onLoginSuccess;
 	
@@ -100,7 +100,7 @@ public class LoginController {
 	private void validateCredentials() {
 		for (User user : users) {
 			if (user.getUsername().equals(username) && user.getPassword().equals(password)) { // If the credentials match a database item
-				numPongWins = user.getNumPongWins() + ""; // Retrieve the number of pong wins from the user
+				this.user = user;
 				
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
@@ -119,17 +119,10 @@ public class LoginController {
 	
 	
 	/**
-	 * @return username
+	 * @return 
 	 */
-	public String getUsername() {
-		return username;
-	}
-	
-	/**
-	 * @return TODO
-	 */
-	public String getNumPongWins() {
-		return numPongWins;
+	public User getUser() {
+		return user;
 	}
 	
 	

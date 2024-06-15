@@ -131,14 +131,26 @@ public class AppController implements Initializable {
     private PongGameController playPong;
     private PongMenuController navPong;
     
+    private DataController data;
+    ArrayList<User> users;
     
-    ArrayList<User> users = new ArrayList<>();
-    User a = new User("a", "b", 0);
+    public AppController() {
+    	data = new DataController();
+    	users = new ArrayList<>();
+    }
     
     
+    
+    
+    
+    // TODO implement logger
+    
+    /**
+     * TODO
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	users.add(a); // temporary
+    	users = data.loadUsers();
     	
     	setAppLaunchView();
     	
@@ -150,6 +162,9 @@ public class AppController implements Initializable {
     }
 
     
+    /**
+     * TODO
+     */
     private void setAppLaunchView() {
     	appLaunchView.setVisible(true);
     	logInView.setVisible(false);
@@ -159,6 +174,9 @@ public class AppController implements Initializable {
     }
     
     
+    /**
+     * TODO
+     */
     private void setMainMenuControllers() {
     	startUpScreen = new StartScreenController(logInMenuBtn, createAcctMenuBtn, appLaunchView, logInView, createAcctView);
     	loginScreen = new LoginController(backToStartScreenBtn2, logInView, appLaunchView, preGameView, existingUsername, existingPassword, logInBtn, users, logInValidationMsg);
@@ -166,6 +184,9 @@ public class AppController implements Initializable {
     }
     
     
+    /**
+     * TODO
+     */
     private void getMainMenuInput() {
     	startUpScreen.getStartScreenInput();
 		
@@ -176,29 +197,53 @@ public class AppController implements Initializable {
     }
     
     
+    /**
+     * TODO
+     */
     private void getLoginSuccess() {
     	// Set listeners for login and registration success
-        loginScreen.setOnLoginSuccess(() -> onUserLoggedIn(loginScreen.getUsername(), loginScreen.getNumPongWins()));
-        registerScreen.setOnRegisterSuccess(() -> onUserRegistered(registerScreen.getUsername(), registerScreen.getNumPongWins()));
+        loginScreen.setOnLoginSuccess(() -> onUserLoggedIn(loginScreen.getUser()));
+        registerScreen.setOnRegisterSuccess(() -> onUserRegistered(registerScreen.getNewUser()));
     }
     
     
-    private void onUserLoggedIn(String username, String numPongWins) {
-    	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, username, numPongWins);
+    /**
+     * TODO
+     * 
+     * @param username
+     * @param numPongWins
+     */
+    private void onUserLoggedIn(User user) {
+    	users = data.loadUsers();
+    	
+    	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, user, data, users);
     	preGameScreen.getPreGameScreenInput();
     	
-    	preGameScreen.setOnGameStart(() -> runPong(username));
+    	preGameScreen.setOnGameStart(() -> runPong(loginScreen.getUser().getUsername()));
     }
     
     
-    private void onUserRegistered(String username, String numPongWins) {
-    	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, username, numPongWins);
+    /**
+     * TODO
+     * 
+     * @param username
+     * @param numPongWins
+     */
+    private void onUserRegistered(User user) {
+    	users = data.loadUsers();
+    	
+    	preGameScreen = new PreGameController(appLaunchView, preGameView, pongGameView, logInView, createAcctView, PreGameMenuBtn, playGameBtn, welcomeMsg, numWinsMsg, user, data, users);
     	preGameScreen.getPreGameScreenInput();
     	
-    	preGameScreen.setOnGameStart(() -> runPong(username));
+    	preGameScreen.setOnGameStart(() -> runPong(user.getUsername()));
     }
     
     
+    /**
+     * TODO
+     * 
+     * @param username
+     */
     private void runPong(String username) {
     	playPong = new PongGameController(pongGameView, ball, plyPaddle, oppPaddle, plyScore, oppScore, gameEndPane, gameResultMsg, plyName, username, plyForfeit);
     	navPong = new PongMenuController(pongGameView, preGameView, plyForfeit, backToMenuBtn, playAgainBtn, playPong, preGameScreen);

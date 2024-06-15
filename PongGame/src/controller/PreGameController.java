@@ -1,8 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import model.User;
 
 /**
  * TODO
@@ -21,14 +24,15 @@ public class PreGameController {
 	private Button startBtn;
 	private Text welcomeMsg;
 	private Text numWinsMsg;
-	private String username;
-	private String numWins;
+	private User user;
+	private DataController data;
+	private ArrayList<User> users;
 	
 	private boolean pongGameStarted;
 	private Runnable onGameStart;
 
 
-	public PreGameController(AnchorPane appLaunchView, AnchorPane preGameView, AnchorPane pongGameView, AnchorPane loginView, AnchorPane createAcctView, Button menuBtn, Button startBtn, Text welcomeMsg, Text numWinsMsg, String username, String numWins) {
+	public PreGameController(AnchorPane appLaunchView, AnchorPane preGameView, AnchorPane pongGameView, AnchorPane loginView, AnchorPane createAcctView, Button menuBtn, Button startBtn, Text welcomeMsg, Text numWinsMsg, User user, DataController data, ArrayList<User> users) {
 		this.appLaunchView = appLaunchView;
 		this.preGameView = preGameView;
 		this.pongGameView = pongGameView;
@@ -38,8 +42,9 @@ public class PreGameController {
 		this.startBtn = startBtn;
 		this.welcomeMsg = welcomeMsg;
 		this.numWinsMsg = numWinsMsg;
-		this.username = username;
-		this.numWins = numWins;
+		this.user = user;
+		this.data = data;
+		this.users = users;
 	}
 	
 	
@@ -54,8 +59,8 @@ public class PreGameController {
 	
 	
 	private void setMessages() {
-		welcomeMsg.setText("WELCOME BACK " + username.toUpperCase()); // TODO MVC
-		numWinsMsg.setText(numWins + " WINS"); // TODO MVC
+		welcomeMsg.setText("WELCOME BACK " + user.getUsername().toUpperCase()); // TODO MVC
+		numWinsMsg.setText(user.getNumPongWins() + " WINS"); // TODO MVC
 	}
 	
 	
@@ -64,6 +69,8 @@ public class PreGameController {
 	 */
 	private void backToStartScreenBtnHandler() {
 		menuBtn.setOnMouseClicked(e -> {
+			data.saveUser(user, users);
+			
 			preGameView.setVisible(false);
 			loginView.setVisible(false);
 			createAcctView.setVisible(false);
@@ -109,9 +116,13 @@ public class PreGameController {
 	}
 	
 	
+	/**
+	 * TODO
+	 */
 	public void updateWinCount() { // TODO update users ArrayList with the updated win count
-		numWins = Integer.parseInt(numWins) + 1 + "";
+		user.setNumPongWins(user.getNumPongWins() + 1);
 		setMessages();
 	}
+	
 	
 }
