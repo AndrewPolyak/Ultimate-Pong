@@ -49,7 +49,7 @@
                         <Font name="Haettenschweiler" size="27.0" />
                      </font>
                   </Button>
-                  <Text fx:id="gameMsg" fill="WHITE" layoutX="352.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PONG" textAlignment="CENTER" wrappingWidth="300.13671875">
+                  <Text fill="WHITE" layoutX="352.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PONG" textAlignment="CENTER" wrappingWidth="300.13671875">
                      <font>
                         <Font name="Haettenschweiler" size="40.0" />
                      </font>
@@ -186,7 +186,7 @@
                   <Circle fill="#cfff04" layoutX="255.0" layoutY="354.0" radius="62.0" stroke="#cfff04" strokeType="INSIDE" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="136.0" layoutX="237.0" layoutY="412.0" stroke="#cfff04" strokeType="INSIDE" width="37.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfff04" height="5.0" layoutX="67.0" layoutY="113.0" stroke="#cfff04" strokeType="INSIDE" width="115.0" />
-                  <AnchorPane fx:id="creatAcctPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
+                  <AnchorPane fx:id="createAcctPane" layoutX="500.0" layoutY="9.0" prefHeight="635.0" prefWidth="490.0">
                      <children>
                         <Button fx:id="createAcctBtn" layoutX="125.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" text="Create Account">
                            <font>

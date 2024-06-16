@@ -18,136 +18,135 @@ import model.User;
  * The AppController class manages the entire application's execution flow
  * 
  * @author Andrew Polyak
- * @version TODO
+ * @version June 16, 2024
  */
 public class AppController implements Initializable {
 
 	@FXML
-    private Button PreGameMenuBtn; // TODO
+    private Button PreGameMenuBtn; // Represents a button in the pre-game screen which allows the user to return to the start screen
 
     @FXML
-    private AnchorPane appLaunchPane; // TODO
+    private AnchorPane appLaunchPane; // Represents the sub-view of the start screen
 
     @FXML
-    private AnchorPane appLaunchView; // TODO
+    private AnchorPane appLaunchView; // Represents the view of the start screen
 
     @FXML
-    private Button backToMenuBtn; // TODO
+    private Button backToMenuBtn; // Represents a button in the pong post-game window which allows the user to return to the pre-game screen
 
     @FXML
-    private Button backToStartScreenBtn1; // TODO
+    private Button backToStartScreenBtn1; // Represents a button in the create account screen which allows the user to return to the start screen
 
     @FXML
-    private Button backToStartScreenBtn2; // TODO
+    private Button backToStartScreenBtn2; // Represents a button in the login screen which allows the user to return to the start screen
 
     @FXML
-    private Circle ball; // TODO
+    private Circle ball; // Represents the ball in the pong game
 
     @FXML
-    private AnchorPane creatAcctPane; // TODO
+    private AnchorPane createAcctPane; // Represents the sub-view of the create account screen
 
     @FXML
-    private Button createAcctBtn; // TODO
+    private Button createAcctBtn; // Represents a button in the create account screen which allows the user to create a new account
 
     @FXML
-    private Button createAcctMenuBtn; // TODO
+    private Button createAcctMenuBtn; // Represents a button on the start screen which allows the user to go to the create account screen
 
     @FXML
-    private Text createAcctValidationMsg; // TODO
+    private Text createAcctValidationMsg; // Represents a message displayed to the user in the create account screen if the username format is invalid
 
     @FXML
-    private AnchorPane createAcctView; // TODO
+    private AnchorPane createAcctView; // Represents the view of the create account screen
 
     @FXML
-    private TextField existingPassword; // TODO
+    private TextField existingPassword; // Represents the password field within the login screen
 
     @FXML
-    private TextField existingUsername; // TODO
+    private TextField existingUsername; // Represents the username field within the login screen
 
     @FXML
-    private AnchorPane gameEndPane; // TODO
+    private AnchorPane gameEndPane; // Represents the pop-up window displayed after a pong game
 
     @FXML
-    private Text gameMsg; // TODO
+    private Text gameResultMsg; // Represents the text informing the player if they won or lost within the pong post-game window
 
     @FXML
-    private Text gameResultMsg; // TODO
+    private Button logInBtn; // Represents a button in the login screen which allows the user to submit their credentials to login
 
     @FXML
-    private Button logInBtn; // TODO
+    private Button logInMenuBtn; // Represents a button on the start screen which allows the user to go to the login screen
 
     @FXML
-    private Button logInMenuBtn; // TODO
+    private AnchorPane logInPane; // Represents the sub-view of the login screen
 
     @FXML
-    private AnchorPane logInPane; // TODO
+    private Text logInValidationMsg; // Represents a message displayed to the user in the login screen if the credentials don't match an account
 
     @FXML
-    private Text logInValidationMsg; // TODO
+    private AnchorPane logInView; // Represents the view of the login screen
 
     @FXML
-    private AnchorPane logInView; // TODO
+    private TextField newPassword; // Represents the password field within the create account screen
 
     @FXML
-    private TextField newPassword; // TODO
+    private TextField newUsername; // Represents the username field within the create account screen
 
     @FXML
-    private TextField newUsername; // TODO
+    private Text numWinsMsg; // Represents the display of the user's win count within the pre-game screen
 
     @FXML
-    private Text numWinsMsg; // TODO
+    private Rectangle oppPaddle; // Represents the opponent's paddle in the pong game
 
     @FXML
-    private Rectangle oppPaddle; // TODO
+    private Text oppScore; // Represents the opponent's score in the pong game
 
     @FXML
-    private Text oppScore; // TODO
+    private Button playAgainBtn; // Represents a button in the pong post-game window that allows the user to play again
 
     @FXML
-    private Button playAgainBtn; // TODO
+    private Button playGameBtn; // Represents a button in the pre-game screen which allows the user to play pong
 
     @FXML
-    private Button playGameBtn; // TODO
+    private Button plyForfeit; // Represents a button in the pong game view which allows the user to forfeit the game and return to the pre-game view
 
     @FXML
-    private Button plyForfeit; // TODO
+    private Text plyName; // Represents the player's name within the pong game
 
     @FXML
-    private Text plyName; // TODO
+    private Rectangle plyPaddle; // Represents the player's paddle in the pong game
 
     @FXML
-    private Rectangle plyPaddle; // TODO
+    private Text plyScore; // Represents the player's score in the pong game
 
     @FXML
-    private Text plyScore; // TODO
+    private AnchorPane pongGameView; // Represents the pong game screen
 
     @FXML
-    private AnchorPane pongGameView; // TODO
+    private AnchorPane preGameView; // Represents the pre-game screen
 
     @FXML
-    private AnchorPane preGameView; // TODO
-
-    @FXML
-    private Text welcomeMsg; // TODO
+    private Text welcomeMsg; // Represents the welcome message in the pre-game screen
     
-    private StartScreenController startUpScreen; // TODO
-    private LoginController loginScreen; // TODO
-    private RegisterController registerScreen; // TODO
-    private PreGameController preGameScreen; // TODO
-    private PongGameController playPong; // TODO
-    private PongMenuController navPong; // TODO
+    private StartScreenController startUpScreen; // Represents an instance of StartScreenController
+    private LoginController loginScreen; // Represents an instance of LoginController
+    private RegisterController registerScreen; // Represents an instance of RegisterController
+    private PreGameController preGameScreen; // Represents an instance of PreGameController
+    private PongGameController playPong; // Represents an instance of PongGameController
+    private PongMenuController navPong; // Represents an instance of PongMenuController
     
-    private DataController data; // TODO
-    private ArrayList<User> users; // TODO
+    private DataController data; // Represents an instance of DataController (to manage loading data)
+    private ArrayList<User> users; // Represents the ArrayList of User objects (all users in the database)
     
     /*
      * TODO LIST
      * 
-     * 1. COMPLETE DOCUMENTATION
+     * DONE - 1. COMPLETE DOCUMENTATION
      * 2. ADD LOGGER
      * 3. IMPROVE PRE-GAME UI (i.e., add game name at top for decoration, change "Menu" button to "Save & Quit"
      * 4. FIX PONG GAMEPLAY BOUNCING BUG
      * 5. FIND OUT HOW TO HIDE PASSWORD FIELD CHARACTERS
+     * 6. CLEAR REGISTER / LOGIN FIELDS ONCE INFO VALIDATED
+     * 7. GENERATE JAVADOCS
      */
     
     

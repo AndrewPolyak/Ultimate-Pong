@@ -1,4 +1,4 @@
 John;Smith;2
-aaa;b;1
 liquid;b;4
 Andrew;Polyak;27
+aaa;b;0

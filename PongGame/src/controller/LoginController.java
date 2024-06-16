@@ -31,7 +31,7 @@ public class LoginController {
 	private ArrayList<User> users; // Represents the database of user credentials
 	private User user;
 	
-	private Runnable onLoginSuccess; // TODO
+	private Runnable onLoginSuccess; // Represents a Runnable instance which runs a new pre-game menu
 	
 	
 	/**
@@ -105,7 +105,8 @@ public class LoginController {
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
-				
+
+				// If setOnLoginSuccess has been called, run onLoginSuccess
 				if (onLoginSuccess != null) {
 					onLoginSuccess.run();
 				}

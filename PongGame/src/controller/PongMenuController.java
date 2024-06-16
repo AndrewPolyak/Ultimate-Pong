@@ -21,8 +21,8 @@ public class PongMenuController {
 	PreGameController preGameScreen; // Represents the logical instance of the pre-game menu
 	
 	
-	private Runnable onPlayAgain; // TODO
-	private Runnable onBackToMenu; // TODO
+	private Runnable onPlayAgain; // Represents a Runnable instance which runs a new pong game
+	private Runnable onBackToMenu; // Represents a Runnable instance which runs a new pre-game menu
 	
 	
 	/**

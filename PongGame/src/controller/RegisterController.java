@@ -37,7 +37,7 @@ public class RegisterController {
 	private int USERNAME_MIN_CHARS = 3; // The minimum character count of the username is 3
 	private int USERNAME_MAX_CHARS = 25; // The maximum character count of the username is 25
 	
-	private Runnable onRegisterSuccess; // TODO
+	private Runnable onRegisterSuccess; // Represents a Runnable instance which runs a new pre-game menu
 	
 	
 	/**
@@ -102,6 +102,7 @@ public class RegisterController {
 				newUser = new User(username, password, NEW_USER_NUM_WINS);
 				users.add(newUser);
 				
+				// If setOnRegisterSuccess has been called, run onRegisterSuccess
 				if (onRegisterSuccess != null) {
 					onRegisterSuccess.run();
 				}

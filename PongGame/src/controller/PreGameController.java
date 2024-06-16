@@ -28,9 +28,9 @@ public class PreGameController {
 	private User user; // Represents the user's profile
 	private DataController data; // Represents the DataController (to save data upon exit)
 	private ArrayList<User> users; // Represents the users ArrayList (contains the users database)
-	private PongMenuMessages message;
+	private PongMenuMessages message = new PongMenuMessages();
 	
-	private Runnable onGameStart; // TODO
+	private Runnable onGameStart; // Represents a Runnable instance which runs a new pong game
 
 	
 	/**
