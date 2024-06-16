@@ -14,7 +14,7 @@ import view.GameViewMessages;
  * The PongController class contains the main logic for controlling the pong gameplay
  * 
  * @author Andrew Polyak
- * @version June 14, 2024
+ * @version June 16, 2024
  */
 public class PongGameController {
 
@@ -72,11 +72,11 @@ public class PongGameController {
 	private final long PADDLE_BOUNCE_COOLDOWN = 600; // In milliseconds ... The ball can only bounce off a paddle once every 600 milliseconds
 	private long lastBounceTime; // Stores the millisecond value since the ball was last bounced
 	
-	private final int WINNING_SCORE = 1; // Defines the score a player must reach to win the game // FIXME
+	private final int WINNING_SCORE = 10; // Defines the score a player must reach to win the game
 	
 	private final double OPP_PADDLE_VELOCITY = 6.4; // Controls the vertical speed of the opponent's paddle
 	
-	private boolean plyWon = false;
+	private boolean plyWon = false; // Represents whether the user has won the game - set to false initially
 	
 	
 	/**
@@ -84,6 +84,7 @@ public class PongGameController {
 	 * It additionally instantiates key objects such as SecureRandom so as to randomly decide the starting direction of the ball <br>
 	 * Finally, gameOn, the boolean value representing whether the game is running, is set to true
 	 * 
+	 * @param gameView
 	 * @param ball
 	 * @param plyPaddle
 	 * @param oppPaddle
@@ -91,8 +92,14 @@ public class PongGameController {
 	 * @param oppScore
 	 * @param gameEndPane
 	 * @param gameResultMsg
+	 * @param plyName
+	 * @param username
+	 * @param forfeitBtn
 	 */
-	public PongGameController(AnchorPane gameView, Circle ball, Rectangle plyPaddle, Rectangle oppPaddle, Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg, Text plyName, String username, Button forfeitBtn) {
+	public PongGameController(
+			AnchorPane gameView, Circle ball, Rectangle plyPaddle, Rectangle oppPaddle, 
+			Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg, 
+			Text plyName, String username, Button forfeitBtn) {
 		this.random = new SecureRandom();
 		this.message = new GameViewMessages();
 		this.username = username;
@@ -108,7 +115,7 @@ public class PongGameController {
 		this.forfeitBtn = forfeitBtn;
 		this.directionRight = random.nextBoolean();
 		this.directionUp = random.nextBoolean();
-		this.gameOn = true;
+		this.gameOn = true; // The game can now begin
 	}
 	
 	
@@ -116,24 +123,25 @@ public class PongGameController {
 	 * The startGame method instantiates an AnimationTimer to begin the "frames" of the game
 	 */
 	public void startGame() {
-		plyName.setText(username);
+		plyName.setText(username); // Set the player's name to their custom username
 		
 		// Make game assets visible
 		ball.setVisible(true);
 		oppPaddle.setVisible(true);
 		plyPaddle.setVisible(true);
 		
-		// Make game results and menu options invisible
-		gameEndPane.setVisible(false);
+		gameEndPane.setVisible(false); // Make game results and menu options invisible
 		
+		// Set scores to 0
 		plyScore.setText("0");
 		oppScore.setText("0");
 		
+		// Set ball spawn
 		ball.setLayoutX(BALL_X_SPAWN_START);
 		ball.setLayoutY(BALL_Y_SPAWN_START);
 		
+		// Create new animation timer to run the game
 		animate = new AnimationTimer() {
-			
 			
 			/**
 			 * The handle method contains the game logic
@@ -149,12 +157,15 @@ public class PongGameController {
 				}
 			}
 		};
-		animate.start(); // Begin game
+		animate.start(); // Start game
 	}
 	
 	
+	/**
+	 * The stopGame method ends the game
+	 */
 	public void stopGame() {
-		animate.stop();
+		animate.stop(); // End game
 	}
 	
 	
@@ -305,9 +316,9 @@ public class PongGameController {
 		gameEndPane.setVisible(true);
 		
 		if (plyWon) {
-			gameResultMsg.setText(message.plyWinMsg());
+			gameResultMsg.setText(message.plyWinMsg()); // Display player won message
 		} else {
-			gameResultMsg.setText(message.plyLoseMsg());
+			gameResultMsg.setText(message.plyLoseMsg()); // Display opponent won message
 		}
 	}
 	
@@ -551,7 +562,7 @@ public class PongGameController {
 
 
 	/**
-	 * @return TODO
+	 * @return plyWon
 	 */
 	public boolean getPlyWon() {
 		return plyWon;
