@@ -1,17 +1,17 @@
 package view;
 
 /**
- * The GameViewMessages class contains the dynamic messages displayed during game execution
+ * The PongGameMessages class contains the dynamic messages displayed during game execution
  * 
  * @author Andrew Polyak
- * @version June 7, 2024
+ * @version June 16, 2024
  */
-public class GameViewMessages {
+public class PongGameMessages {
 
 	/**
 	 * The default GameViewMessages constructor
 	 */
-	public GameViewMessages() { }
+	public PongGameMessages() { }
 	
 	
 	/**

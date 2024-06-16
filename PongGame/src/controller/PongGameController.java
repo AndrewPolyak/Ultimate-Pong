@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import view.GameViewMessages;
+import view.PongGameMessages;
 
 /**
  * The PongController class contains the main logic for controlling the pong gameplay
@@ -31,7 +31,7 @@ public class PongGameController {
 	private Text plyName;
 	private Button forfeitBtn;
 	
-	private GameViewMessages message; // Contains dynamic game messages
+	private PongGameMessages message; // Contains dynamic game messages
 	
 	private String username; // Represents the player's username
 	
@@ -101,7 +101,7 @@ public class PongGameController {
 			Text plyScore, Text oppScore, AnchorPane gameEndPane, Text gameResultMsg, 
 			Text plyName, String username, Button forfeitBtn) {
 		this.random = new SecureRandom();
-		this.message = new GameViewMessages();
+		this.message = new PongGameMessages();
 		this.username = username;
 		this.ball = ball;
 		this.plyPaddle = plyPaddle;

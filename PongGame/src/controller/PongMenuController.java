@@ -115,7 +115,7 @@ public class PongMenuController {
 	
 	
 	/**
-	 * TODO
+	 * The setOnPlayAgain method instantiates onPlayAgain
 	 * 
 	 * @param onPlayAgain
 	 */
@@ -125,7 +125,7 @@ public class PongMenuController {
 	
 	
 	/**
-	 * TODO
+	 * The setOnBackToMenu method instantiates onBackToMenu
 	 * 
 	 * @param onBackToMenu
 	 */

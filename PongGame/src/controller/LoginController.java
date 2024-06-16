@@ -12,7 +12,7 @@ import model.User;
  * LoginController handles user interactions during the login process
  * 
  * @author Andrew Polyak
- * @version TODO
+ * @version June 16, 2024
  */
 public class LoginController {
 
@@ -31,7 +31,7 @@ public class LoginController {
 	private ArrayList<User> users; // Represents the database of user credentials
 	private User user;
 	
-	private Runnable onLoginSuccess;
+	private Runnable onLoginSuccess; // TODO
 	
 	
 	/**
@@ -127,7 +127,7 @@ public class LoginController {
 	
 	
 	/**
-	 * TODO
+	 * The setOnLoginSuccess method instantiates onLoginSuccess
 	 * 
 	 * @param onLoginSuccess
 	 */

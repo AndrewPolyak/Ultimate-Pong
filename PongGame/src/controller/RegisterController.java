@@ -12,7 +12,7 @@ import model.User;
  * LoginController handles user interactions during the account creation process
  * 
  * @author Andrew Polyak
- * @version TODO
+ * @version June 16, 2024
  */
 public class RegisterController {
 
@@ -149,7 +149,7 @@ public class RegisterController {
 	
 	
 	/**
-	 * TODO
+	 * The setOnRegisterSuccess method instantiates onRegisterSuccess
 	 * 
 	 * @param onRegisterSuccess
 	 */
