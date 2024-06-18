@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
@@ -59,7 +60,7 @@ public class AppController implements Initializable {
     private AnchorPane createAcctView; // Represents the view of the create account screen
 
     @FXML
-    private TextField existingPassword; // Represents the password field within the login screen
+    private PasswordField existingPassword; // Represents the password field within the login screen
 
     @FXML
     private TextField existingUsername; // Represents the username field within the login screen
@@ -86,7 +87,7 @@ public class AppController implements Initializable {
     private AnchorPane logInView; // Represents the view of the login screen
 
     @FXML
-    private TextField newPassword; // Represents the password field within the create account screen
+    private PasswordField newPassword; // Represents the password field within the create account screen
 
     @FXML
     private TextField newUsername; // Represents the username field within the create account screen
@@ -140,13 +141,11 @@ public class AppController implements Initializable {
     /*
      * TODO LIST
      * 
-     * DONE - 1. COMPLETE DOCUMENTATION
-     * 2. ADD LOGGER
-     * 3. IMPROVE PRE-GAME UI (i.e., add game name at top for decoration, change "Menu" button to "Save & Quit"
-     * 4. FIX PONG GAMEPLAY BOUNCING BUG
-     * 5. FIND OUT HOW TO HIDE PASSWORD FIELD CHARACTERS
-     * 6. CLEAR REGISTER / LOGIN FIELDS ONCE INFO VALIDATED
-     * 7. GENERATE JAVADOCS
+     * 1. ADD LOGGER
+     * 2. FIX PONG GAMEPLAY BOUNCING BUG
+     * 3. CLEAR REGISTER / LOGIN FIELDS ONCE INFO VALIDATED
+     * 4. GENERATE JAVADOCS
+     * 5. ENSURE NEW ACCOUNT USERNAMES CANNOT BE THE SAME AS EXISTING ACCOUNTS
      */
     
     

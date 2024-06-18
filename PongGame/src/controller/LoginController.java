@@ -99,7 +99,8 @@ public class LoginController {
 	 */
 	private void validateCredentials() {
 		for (User user : users) {
-			if (user.getUsername().toLowerCase().equals(username.toLowerCase()) && user.getPassword().toLowerCase().equals(password.toLowerCase())) { // If the credentials match a database item
+			if (user.getUsername().toLowerCase().trim().equals(username.toLowerCase().trim()) && 
+					user.getPassword().toLowerCase().trim().equals(password.toLowerCase().trim())) { // If the credentials match a database item
 				this.user = user;
 				
 				validationMsg.setVisible(false);
