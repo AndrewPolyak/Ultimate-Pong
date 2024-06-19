@@ -2,3 +2,4 @@ John;Smith;2
 liquid;b;4
 aaa;b;0
 Andrew;Polyak;27
+test123;123;0

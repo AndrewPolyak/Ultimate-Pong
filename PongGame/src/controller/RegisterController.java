@@ -7,12 +7,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import model.User;
+import view.RegisterMenuMessages;
 
 /**
  * LoginController handles user interactions during the account creation process
  * 
  * @author Andrew Polyak
- * @version June 16, 2024
+ * @version June 18, 2024
  */
 public class RegisterController {
 
@@ -21,7 +22,7 @@ public class RegisterController {
 	private AnchorPane appLaunchView; // View of the app's launch page (page before login page)
 	private AnchorPane preGameView; // View of the app's pre-game page (page after login page)
 	private TextField usernameField; // Text field containing the username input
-	private TextField passwordField; // Text field containing the password input // TODO find out how to hide characters
+	private TextField passwordField; // Text field containing the password input
 	private Button createAcctBtn; 
 	private Text validationMsg; // A message that appears if the user credentials don't match any in the records
 	
@@ -31,6 +32,8 @@ public class RegisterController {
 	private ArrayList<User> users; // Represents the database of user credentials
 	
 	private User newUser;
+	
+	private RegisterMenuMessages message; // Contains dynamic menu validation messages
 	
 	private int NEW_USER_NUM_WINS = 0; // The user will start with 0 wins
 	
@@ -63,6 +66,7 @@ public class RegisterController {
 		this.createAcctBtn = createAcctBtn;
 		this.users = users;
 		this.validationMsg = validationMsg;
+		this.message = new RegisterMenuMessages();
 	}
 	
 	
@@ -83,6 +87,10 @@ public class RegisterController {
 			validationMsg.setVisible(false);
 			registerView.setVisible(false);
 			appLaunchView.setVisible(true); // Open launcher screen
+			
+			// Clear the input fields
+			usernameField.clear();
+			passwordField.clear();
 		});
 	}
 	
@@ -93,10 +101,38 @@ public class RegisterController {
 	 */
 	private void collectNewCredentials() {
 		createAcctBtn.setOnMouseClicked(e -> {
+			boolean userIdExists = false;
+			
 			username = usernameField.getText();
 			password = passwordField.getText();
 			
-			if (validUsername(username) && password.length() > 0) { // If both username and password are valid
+			// Check if the user-entered username matches an existing username
+			for (User user : users) {
+				if (usernameExistInDb(user.getUsername())) {
+					userIdExists = true;
+				}
+			}
+			
+			if (userIdExists) { // If the user has entered a username that already exists
+				validationMsg.setText(message.nameAlreadyExistsMsg()); // Inform user that the entered username is invalid due to it already existing
+				validationMsg.setVisible(true);
+				
+			} else if (username.length() == 0 && password.length() == 0) { // If both fields are empty
+				validationMsg.setText(message.fieldsBlankMsg()); // Inform user that they need to enter values into the fields
+				validationMsg.setVisible(true);
+				
+			} else if (username.length() == 0) { // If the username field is blank
+				validationMsg.setText(message.usernameBlankMsg()); // Inform user that the username field must be filled in
+				validationMsg.setVisible(true);
+				
+			} else if (password.length() == 0) { // If the password field is blank
+				validationMsg.setText(message.passwordBlankMsg()); // Inform user that the password field must be filled in
+				validationMsg.setVisible(true);
+				
+			} else if (validUsername(username) && password.length() > 0) { // If both username and password are valid, create the account
+				// Clear the input fields
+				usernameField.clear();
+				passwordField.clear();
 				
 				// Create new User object with the user's details and add it to the users ArrayList
 				newUser = new User(username, password, NEW_USER_NUM_WINS);
@@ -110,8 +146,10 @@ public class RegisterController {
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
+				
 			} else {
-				validationMsg.setVisible(true); // Inform user that the entered username is invalid
+				validationMsg.setText(message.nameLengthMsg()); // Inform user that the entered username is invalid due to length
+				validationMsg.setVisible(true);
 			}
 		});
 	}
@@ -129,6 +167,17 @@ public class RegisterController {
 		} else {
 			return false;
 		}
+	}
+	
+	
+	/**
+	 * The usernameExistInDb method returns true if the user-entered username matches a database item, false otherwise
+	 * 
+	 * @param enteredUsername
+	 * @return
+	 */
+	private boolean usernameExistInDb(String enteredUsername) {
+		return enteredUsername.toLowerCase().trim().equals(username.toLowerCase().trim());
 	}
 	
 	
