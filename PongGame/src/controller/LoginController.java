@@ -26,7 +26,7 @@ public class LoginController {
 	private Button loginBtn; // Button to submit user credentials to go to pre-game page
 	private Text validationMsg; // A message that appears if the user credentials don't match any in the records
 	
-	private LoginMenuMessages message;
+	private LoginMenuMessages message; // Contains dynamic menu validation messages
 	
 	private String username = "";
 	private String password = "";
@@ -123,6 +123,7 @@ public class LoginController {
 				if (onLoginSuccess != null) {
 					onLoginSuccess.run();
 				}
+				
 			} else if (username.length() == 0 && password.length() == 0) { // If both fields are empty
 				validationMsg.setText(message.fieldsBlankMsg()); // Inform user that they need to enter values into the fields
 				validationMsg.setVisible(true);
@@ -134,6 +135,7 @@ public class LoginController {
 			} else if (password.length() == 0) { // If the password field is blank
 				validationMsg.setText(message.passwordBlankMsg()); // Inform user to fill in the password field
 				validationMsg.setVisible(true);
+				
 			} else {
 				validationMsg.setText(message.AccountDoesNotExistMsg()); // Inform user that the entered credentials don't match an existing account
 				validationMsg.setVisible(true); // Inform user that the entered credentials don't match an account

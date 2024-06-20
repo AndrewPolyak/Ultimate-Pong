@@ -143,8 +143,7 @@ public class AppController implements Initializable {
      * 
      * 1. ADD LOGGER
      * 2. FIX PONG GAMEPLAY BOUNCING BUG
-     * 3. ADD SAVE-ON-APP-CLOSE FUNCTIONALITY
-     * 4. GENERATE JAVADOCS
+     * 3. GENERATE JAVADOCS
      */
     
     

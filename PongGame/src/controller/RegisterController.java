@@ -113,23 +113,7 @@ public class RegisterController {
 				}
 			}
 			
-			if (userIdExists) { // If the user has entered a username that already exists
-				validationMsg.setText(message.nameAlreadyExistsMsg()); // Inform user that the entered username is invalid due to it already existing
-				validationMsg.setVisible(true);
-				
-			} else if (username.length() == 0 && password.length() == 0) { // If both fields are empty
-				validationMsg.setText(message.fieldsBlankMsg()); // Inform user that they need to enter values into the fields
-				validationMsg.setVisible(true);
-				
-			} else if (username.length() == 0) { // If the username field is blank
-				validationMsg.setText(message.usernameBlankMsg()); // Inform user that the username field must be filled in
-				validationMsg.setVisible(true);
-				
-			} else if (password.length() == 0) { // If the password field is blank
-				validationMsg.setText(message.passwordBlankMsg()); // Inform user that the password field must be filled in
-				validationMsg.setVisible(true);
-				
-			} else if (validUsername(username) && password.length() > 0) { // If both username and password are valid, create the account
+			if (validUsername(username) && password.length() > 0) { // If both username and password are valid, create the account
 				// Clear the input fields
 				usernameField.clear();
 				passwordField.clear();
@@ -146,6 +130,22 @@ public class RegisterController {
 				validationMsg.setVisible(false);
 				appLaunchView.setVisible(false);
 				preGameView.setVisible(true); // Open pre-game screen
+				
+			} else if (username.length() == 0 && password.length() == 0) { // If both fields are empty
+				validationMsg.setText(message.fieldsBlankMsg()); // Inform user that they need to enter values into the fields
+				validationMsg.setVisible(true);
+				
+			} else if (username.length() == 0) { // If the username field is blank
+				validationMsg.setText(message.usernameBlankMsg()); // Inform user that the username field must be filled in
+				validationMsg.setVisible(true);
+				
+			} else if (password.length() == 0) { // If the password field is blank
+				validationMsg.setText(message.passwordBlankMsg()); // Inform user that the password field must be filled in
+				validationMsg.setVisible(true);
+				
+			} else if (userIdExists) { // If the user has entered a username that already exists
+				validationMsg.setText(message.nameAlreadyExistsMsg()); // Inform user that the entered username is invalid due to it already existing
+				validationMsg.setVisible(true);
 				
 			} else {
 				validationMsg.setText(message.nameLengthMsg()); // Inform user that the entered username is invalid due to length
