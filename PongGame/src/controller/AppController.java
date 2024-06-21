@@ -138,12 +138,6 @@ public class AppController implements Initializable {
     private DataController data; // Represents an instance of DataController (to manage loading data)
     private ArrayList<User> users; // Represents the ArrayList of User objects (all users in the database)
     
-    /*
-     * TODO LIST
-     * 
-     * 1. FIX PONG GAMEPLAY BOUNCING BUG
-     */
-    
     
     /**
      * The AppController constructor instantiates the DataController instance to manage data loading within AppController, as well as

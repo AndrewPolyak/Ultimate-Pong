@@ -336,14 +336,14 @@ public class PongGameController {
 		if ((currentTime - lastBounceTime) > PADDLE_BOUNCE_COOLDOWN) { // If elapsed time since last bounce is longer than cooldown timer
 			xVelocity *= -1; // Bounce ball
 			
-			if (ballTouchingTopOfPaddle(paddle)) { // FIXME the direction-changing logic works inconsistently ... sometimes inappropriately changes direction
-				if (yVelocity > 0) { // If ball is moving downward, send it upward and slightly increase speed
-					yVelocity *= -1.1;
-				}
+			
+			// If ball touches paddle edges, slightly increase speed
+			if (ballTouchingTopOfPaddle(paddle)) {
+					yVelocity *= 1.025;
+					
 			} else if (ballTouchingBottomOfPaddle(paddle)) {
-				if (this.yVelocity < 0) { // If ball is moving upward, send it downward and slightly increase speed
-					this.yVelocity *= -1.1;
-				}
+					yVelocity *= 1.025;
+					
 			} 
 			lastBounceTime = currentTime; 
 		}
@@ -465,7 +465,7 @@ public class PongGameController {
 	 */
 	private boolean wallCollision() {
 		return (ball.getLayoutY() <= (TOP_WALL + ball.getRadius())) || 
-				(ball.getLayoutY() >= (BOTTOM_WALL - ball.getRadius())); // FIXME: Ball sometimes gets stuck in floor or ceiling if paddle pushes it into it
+				(ball.getLayoutY() >= (BOTTOM_WALL - ball.getRadius()));
 	}
 	
 	
@@ -542,9 +542,7 @@ public class PongGameController {
 	 * @return true if the ball touches the top portion of the paddle, false otherwise
 	 */
 	private boolean ballTouchingTopOfPaddle(Rectangle paddle) {
-		return (this.ball.getLayoutY() < paddle.getLayoutY() + 20) || // If the ball is in the top portion of the paddle
-				(this.ball.getLayoutX() > paddle.getLayoutX() && // If the ball is within the left side of the paddle
-						this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth()); // And if the ball is within the right side of the paddle
+		return (this.ball.getLayoutY() < paddle.getLayoutY() + 20); // If the ball is in the top portion of the paddle
 	}
 	
 	
@@ -555,9 +553,7 @@ public class PongGameController {
 	 * @return true if the ball touches the bottom portion of the paddle, false otherwise
 	 */
 	private boolean ballTouchingBottomOfPaddle(Rectangle paddle) {
-		return (this.ball.getLayoutY() > paddle.getLayoutY() + 50) || // If the ball is in the bottom portion of the paddle
-				(this.ball.getLayoutX() > paddle.getLayoutX() && // If the ball is within the left side of the paddle
-						this.ball.getLayoutX() < paddle.getLayoutX() + paddle.getWidth()); // And if the ball is within the right side of the paddle
+		return (this.ball.getLayoutY() > paddle.getLayoutY() + 50); // If the ball is in the bottom portion of the paddle
 	}
 
 
