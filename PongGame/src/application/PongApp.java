@@ -17,16 +17,16 @@ public class PongApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/view/AppView.fxml"));
-			Scene scene = new Scene(root,1000,650);
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/view/AppView.fxml")); // Define the root as the AppView file
+			Scene scene = new Scene(root,1000,650); // Set the scene for the root, displaying it at 1000x650
 			primaryStage.setScene(scene);
-			primaryStage.show();
+			primaryStage.show(); // Display the GUI
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) {
-		launch(args);
+		launch(args); // Run application
 	}
 }

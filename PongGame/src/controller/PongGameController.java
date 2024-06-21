@@ -14,7 +14,7 @@ import view.PongGameMessages;
  * The PongController class contains the main logic for controlling the pong gameplay
  * 
  * @author Andrew Polyak
- * @version June 16, 2024
+ * @version June 21, 2024
  */
 public class PongGameController {
 
