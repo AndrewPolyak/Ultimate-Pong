@@ -22,7 +22,7 @@ import model.User;
  * @version June 16, 2024
  */
 public class AppController implements Initializable {
-
+	
 	@FXML
     private Button PreGameMenuBtn; // Represents a button in the pre-game screen which allows the user to return to the start screen
 
@@ -141,9 +141,7 @@ public class AppController implements Initializable {
     /*
      * TODO LIST
      * 
-     * 1. ADD LOGGER
-     * 2. FIX PONG GAMEPLAY BOUNCING BUG
-     * 3. GENERATE JAVADOCS
+     * 1. FIX PONG GAMEPLAY BOUNCING BUG
      */
     
     
