@@ -113,7 +113,7 @@ public class RegisterController {
 				}
 			}
 			
-			if (validUsername(username) && password.length() > 0) { // If both username and password are valid, create the account
+			if (validUsername(username) && password.length() > 0 && !userIdExists) { // If both username and password are valid, create the account
 				// Clear the input fields
 				usernameField.clear();
 				passwordField.clear();
