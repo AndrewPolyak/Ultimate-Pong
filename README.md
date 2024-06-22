@@ -3,7 +3,9 @@ Ultimate Pong is based on the classic Pong video game, and is built on Java.
 
 The application allows a user to create and log into an account which tracks their win count of Pong, as well as play Pong itself.
 
-This represents my first foray into game development. Though simple, Pong felt like a good way to start with video game development.
+This represents my first foray into game development. Though simple, Pong felt like a good way to start within the field.
+
+If you intend to run this project on your local machine, you need to set the relevant classpath library paths and VM argument to enable JavaFX functionality (Universal EXE file may be implemented in the future).
 
 Here is an overview of Pong Ultimate:
 
@@ -42,7 +44,7 @@ GAME SCREEN:
 POST-GAME SCREEN
 - Once a player wins, the post-game screen is displayed
 - The user has the option to return to the pre-game screen or play another game
-- Once this screen occurs, if the user won, then their win count is updated (but not saved to the database; they need to save and exit to save their data)
+- Once this screen occurs, if the user won, then their win count is updated and is reflected within the pre-game screen (but not saved to the database; they need to save and exit to save their data)
 ![image](https://github.com/AndrewPolyak/Ultimate-Pong/assets/157662133/7f444eac-27f4-4f19-be20-0c506348acde)
 ![image](https://github.com/AndrewPolyak/Ultimate-Pong/assets/157662133/a6452256-8119-4027-a45f-fe6813fea630)
 
