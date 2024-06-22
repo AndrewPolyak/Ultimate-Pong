@@ -33,6 +33,7 @@ GAME SCREEN:
 - The player controls their paddle with their mouse positioning
 - The opponent's paddle is controlled by an algorithm that attempts to center the paddle with the ball's position, but at a set, balanced speed
 - If either paddle hits the ball with the top or bottom edges of their paddles, then the ball becomes more vertically skewed, which makes it possible to beat the AI opponent
+- The paddles are coded to always remain within the playing field (and so is the ball: it bounces off of the paddles and the walls)
 - If you win, your account's score count is increased by one
 - The balancing is good: the difficulty feels fair but also satisfyingly challenging
 - Ball spawning, direction, and trajectory is randomized somewhat to keep the game interesting (the ball always spawns in the same X-coord; the Y-coord changes)
@@ -43,5 +44,7 @@ POST-GAME SCREEN
 - The user has the option to return to the pre-game screen or play another game
 - Once this screen occurs, if the user won, then their win count is updated (but not saved to the database; they need to save and exit to save their data)
 ![image](https://github.com/AndrewPolyak/Ultimate-Pong/assets/157662133/7f444eac-27f4-4f19-be20-0c506348acde)
+![image](https://github.com/AndrewPolyak/Ultimate-Pong/assets/157662133/a6452256-8119-4027-a45f-fe6813fea630)
+
 
 That's it for my app! Thank you for checking out my project!
